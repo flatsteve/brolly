@@ -1,30 +1,35 @@
 import React, { Component } from "react";
 import { getGeoLocation, getClosestLocation } from "../services/geolocation";
-import { getWeatherObservation } from "../services/met";
+import { Consumer } from "../store";
 
 export default class Location extends Component {
-  requestLocation() {
+  requestLocation = () => {
     getGeoLocation()
-      .then(({ coords }) => {
-        const location = getClosestLocation({
-          latitude: coords.latitude,
-          longitude: coords.longitude
-        });
+      .then(({ coords: { latitude, longitude } }) => {
+        const locationName = getClosestLocation({
+          latitude,
+          longitude
+        }).name;
 
-        const observation = getWeatherObservation(location.id);
-
-        console.log("LOC", location);
-        console.log("REPORT", observation);
+        console.log(locationName);
       })
       .catch(error => {
         console.warn(`Something went wrong. ${error.message}.`);
       });
-  }
+  };
 
   render() {
     return (
       <div>
-        <button onClick={this.requestLocation}>Get location</button>
+        <Consumer>
+          {data => {
+            console.log(data);
+
+            return (
+              <input onFocus={this.requestLocation} value={data.locationName} />
+            );
+          }}
+        </Consumer>
       </div>
     );
   }

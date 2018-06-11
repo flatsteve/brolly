@@ -1,14 +1,18 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import Location from "./components/Location";
+import { AppProvider } from "./store";
 
-const App = () => {
-  return (
-    <div>
-      <Location />
-    </div>
-  );
-};
+export default class App extends Component {
+  render() {
+    return (
+      <div>
+        <AppProvider>
+          <Location />
+        </AppProvider>
+      </div>
+    );
+  }
+}
 
-export default App;
 ReactDOM.render(<App />, document.getElementById("app"));
