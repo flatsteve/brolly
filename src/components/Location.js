@@ -1,36 +1,28 @@
 import React, { Component } from "react";
 import { getGeoLocation, getClosestLocation } from "../services/geolocation";
-import { Consumer } from "../store";
+import { withStore } from "../data/store";
 
-export default class Location extends Component {
-  requestLocation = () => {
-    getGeoLocation()
-      .then(({ coords: { latitude, longitude } }) => {
-        const locationName = getClosestLocation({
-          latitude,
-          longitude
-        }).name;
+class Location extends Component {
+  requestLocation = updateLocation => {
+    getGeoLocation().then(({ coords: { latitude, longitude } }) => {
+      const location = getClosestLocation({ latitude, longitude });
 
-        console.log(locationName);
-      })
-      .catch(error => {
-        console.warn(`Something went wrong. ${error.message}.`);
-      });
+      updateLocation(location);
+    });
   };
 
   render() {
+    const { store } = this.props;
+
     return (
       <div>
-        <Consumer>
-          {data => {
-            console.log(data);
-
-            return (
-              <input onFocus={this.requestLocation} value={data.locationName} />
-            );
-          }}
-        </Consumer>
+        <input
+          onFocus={() => this.requestLocation(store.updateLocation)}
+          value={store.location.name}
+        />
       </div>
     );
   }
 }
+
+export default withStore(Location);

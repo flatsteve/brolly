@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import Location from "./components/Location";
-import { AppProvider } from "./store";
+import Location from "./Location";
+import Forecast from "./Forecast";
+import { AppProvider } from "../data/store";
 
 export default class App extends Component {
   render() {
@@ -9,6 +10,7 @@ export default class App extends Component {
       <div>
         <AppProvider>
           <Location />
+          <Forecast />
         </AppProvider>
       </div>
     );
