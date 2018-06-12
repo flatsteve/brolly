@@ -8,18 +8,30 @@ import { withStore } from "../data/store";
 
 class Forecast extends Component {
   state = {
+    loading: true,
     currentForecast: null
   };
 
   componentDidMount() {
-    const { location, updateForecast } = this.props.store;
+    const { location, updateForecast, forecast } = this.props.store;
+
+    // FOR DEV TESTING ONLY - DONT REFRESH FORECAST EVERY TIME
+    if (forecast) {
+      return this.setState({
+        currentForecast: getCurrentForecast(forecast),
+        loading: false
+      });
+    }
 
     getWeatherForecast(location.id)
       .then(res => {
         const forecast = extract5DayForecast(res);
         updateForecast(forecast);
 
-        this.setState({ currentForecast: getCurrentForecast(forecast) });
+        this.setState({
+          currentForecast: getCurrentForecast(forecast),
+          loading: false
+        });
       })
       .catch(error => {
         console.log(error);
@@ -27,13 +39,28 @@ class Forecast extends Component {
   }
 
   render() {
-    console.log("STORE", this.props.store);
+    const { loading, currentForecast } = this.state;
 
     return (
       <div>
-        {this.props.store.forecast && <p>Temp: </p>}
+        {loading && <p>Loading...</p>}
 
-        {!this.props.store.forecast && <p>Loading...</p>}
+        {!loading && currentForecast ? (
+          <div>
+            <p>
+              Temp: {currentForecast.temperature.value}
+              {currentForecast.temperature.unit} (feels like{" "}
+              {currentForecast.temperature_feel.value})
+            </p>
+
+            <p>
+              Chance of rain: {currentForecast.precipitation.value}
+              {currentForecast.precipitation.unit}
+            </p>
+          </div>
+        ) : (
+          <p>No forecast available</p>
+        )}
       </div>
     );
   }
