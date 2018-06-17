@@ -6,6 +6,8 @@ import GradientBackground from "./GradientBackground";
 import Location from "./Location";
 import Forecast from "./Forecast";
 
+import "../styles/app.scss";
+
 export default class App extends Component {
   render() {
     return (
