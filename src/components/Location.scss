@@ -1,0 +1,11 @@
+@import "../styles/colours";
+
+.location-input {
+  background-color: transparent;
+  border: none;
+  color: $white;
+
+  &:focus {
+    outline: none;
+  }
+}

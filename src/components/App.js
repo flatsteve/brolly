@@ -4,9 +4,11 @@ import ReactDOM from "react-dom";
 import { AppProvider } from "../data/store";
 import GradientBackground from "./GradientBackground";
 import Location from "./Location";
+import DatePicker from "./DatePicker";
 import Forecast from "./Forecast";
 
-import "../styles/app.scss";
+import "../styles/styles.scss";
+import "./app.scss";
 
 export default class App extends Component {
   render() {
@@ -14,8 +16,25 @@ export default class App extends Component {
       <div>
         <AppProvider>
           <GradientBackground>
-            <Location />
-            <Forecast />
+            <div className="app">
+              <h2 className="logo">Brolly</h2>
+
+              <div className="app-controls">
+                <Location />
+                <DatePicker />
+              </div>
+
+              <Forecast />
+
+              <p>
+                <small className="footer-made">
+                  Made with <span className="typo-emoji">🍻</span> by{" "}
+                  <a href="http://www.flatsteve.com" target="_blank">
+                    Flatsteve
+                  </a>
+                </small>
+              </p>
+            </div>
           </GradientBackground>
         </AppProvider>
       </div>

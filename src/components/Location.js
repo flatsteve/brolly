@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { getGeoLocation, getClosestLocation } from "../services/geolocation";
 import { withStore } from "../data/store";
 
+import "./Location.scss";
+
 class Location extends Component {
   requestLocation = updateLocation => {
     getGeoLocation().then(({ coords: { latitude, longitude } }) => {
@@ -17,6 +19,7 @@ class Location extends Component {
     return (
       <div>
         <input
+          className="location-input"
           onFocus={() => this.requestLocation(store.updateLocation)}
           value={store.location.name}
         />

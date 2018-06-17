@@ -1,6 +1,4 @@
-@import "../styles/colours";
-
-.bk {
+.background {
   bottom: 0;
   left: 0;
   position: fixed;
@@ -8,7 +6,7 @@
   top: 0;
 
   &--low {
-    background: $blue;
-    background: linear-gradient(to bottom, #2f80ed, #56ccf2);
+    background: #1565c0;
+    background: linear-gradient(to bottom, #b92b27, #1565c0);
   }
 }
