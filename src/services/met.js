@@ -1,6 +1,7 @@
 import axios from "axios";
 import { addMinutes, isSameDay, isBefore } from "date-fns";
 import { get } from "lodash";
+import { WEATHER_TYPES } from "../data/raw_data";
 
 const START_OF_DAY = new Date().setHours(0, 0, 0, 0);
 const API_KEY = "4f2d4f02-ef8c-43cb-a2ce-a96855b01ac7";
@@ -29,7 +30,7 @@ export const extract5DayForecast = rawdata => {
           precipitation: { value: forecast.Pp, unit: "%" },
           wind_speed: { value: forecast.S, unit: "mph" },
           wind_direction: { value: forecast.D, unit: null },
-          wind_direction: { value: forecast.D, unit: null }
+          type: { value: WEATHER_TYPES[forecast.W], unit: null }
         };
       })
     };

@@ -1,4 +1,4 @@
-import locations from "../data/locations";
+import { LOCATIONS } from "../data/raw_data";
 
 export const getGeoLocation = () => {
   return new Promise((resolve, reject) => {
@@ -22,7 +22,7 @@ export const getClosestLocation = targetLocation => {
     return vectorDistance(dx, dy);
   }
 
-  return locations.reduce((prev, curr) => {
+  return LOCATIONS.reduce((prev, curr) => {
     const prevDistance = locationDistance(targetLocation, prev);
     const currDistance = locationDistance(targetLocation, curr);
     return prevDistance < currDistance ? prev : curr;
