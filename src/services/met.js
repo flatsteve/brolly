@@ -1,11 +1,11 @@
 import axios from "axios";
-import { addMinutes, isSameDay, isBefore } from "date-fns";
 import { get } from "lodash";
+import { addMinutes, isSameDay, isBefore } from "date-fns";
+import { getItem } from "../services/storage";
 
 const START_OF_DAY = new Date().setHours(0, 0, 0, 0);
 const API_KEY = "4f2d4f02-ef8c-43cb-a2ce-a96855b01ac7";
-const BASE_URL =
-  "http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/";
+const BASE_URL = "//datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/";
 const WEATHER_TYPES = {
   0: "Clear night",
   1: "Sunny day",
@@ -40,10 +40,8 @@ const WEATHER_TYPES = {
 };
 
 export const getWeatherLocations = () => {
-  if (JSON.parse(window.localStorage.getItem("brolly_locations"))) {
-    return Promise.resolve(
-      JSON.parse(window.localStorage.getItem("brolly_locations"))
-    );
+  if (getItem("locations")) {
+    return Promise.resolve(getItem("brolly_locations"));
   }
 
   return axios(`${BASE_URL}sitelist?key=${API_KEY}`);

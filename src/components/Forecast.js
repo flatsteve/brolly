@@ -16,6 +16,16 @@ class Forecast extends Component {
   };
 
   componentDidMount() {
+    this.getForecast();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.store.location.id !== this.props.store.location.id) {
+      this.getForecast();
+    }
+  }
+
+  getForecast() {
     const { location, updateForecast, forecast } = this.props.store;
 
     // FOR DEV TESTING ONLY - DONT REFRESH FORECAST EVERY TIME

@@ -1,5 +1,6 @@
-import { getWeatherLocations } from "./met";
 import { get } from "lodash";
+import { getWeatherLocations } from "./met";
+import { setItem } from "./storage";
 
 export const getGeoLocation = () => {
   return new Promise((resolve, reject) => {
@@ -30,11 +31,7 @@ export const getClosestLocation = targetLocation => {
 
         if (res.data) {
           locations = get(res, "data.Locations.Location", null);
-
-          window.localStorage.setItem(
-            "brolly_locations",
-            JSON.stringify(locations)
-          );
+          setItem("locations", locations);
         } else {
           locations = res;
         }

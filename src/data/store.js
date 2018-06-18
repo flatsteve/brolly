@@ -1,4 +1,5 @@
 import React, { Component, createContext } from "react";
+import { getItem, setItem } from "../services/storage";
 
 const INITIAL_LOCATION = {
   id: "353101",
@@ -13,12 +14,9 @@ const Provider = store.Provider;
 
 export class AppProvider extends Component {
   state = {
-    location:
-      JSON.parse(window.localStorage.getItem("brolly_location")) ||
-      INITIAL_LOCATION,
+    location: getItem("location") || INITIAL_LOCATION,
     updateLocation: location => this.setState({ location }),
-    forecast:
-      JSON.parse(window.localStorage.getItem("brolly_forecast")) || null,
+    forecast: getItem("forecast") || null,
     updateForecast: forecast => this.setState({ forecast })
   };
 
@@ -27,20 +25,18 @@ export class AppProvider extends Component {
 
     Object.keys(this.state).forEach(key => {
       if (dataToCacheLocally.includes(key) && this.state[key]) {
-        window.localStorage.setItem(
-          `brolly_${key}`,
-          JSON.stringify(this.state[key])
-        );
+        setItem(key, this.state[key]);
       }
     });
   }
 
   storeLocally = (key, value) => {
-    window.localStorage.setItem(`brolly_${key}`, JSON.stringify(value));
+    setItem(key, value);
   };
 
   render() {
     console.log("STORE", this.state);
+
     return <Provider value={this.state}>{this.props.children}</Provider>;
   }
 }
