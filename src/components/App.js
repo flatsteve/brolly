@@ -26,8 +26,8 @@ export default class App extends Component {
 
               <Forecast />
 
-              <p>
-                <small className="footer-made">
+              <p className="footer-made">
+                <small>
                   Made with <span className="typo-emoji">🍻</span> by{" "}
                   <a href="http://www.flatsteve.com" target="_blank">
                     Flatsteve

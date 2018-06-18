@@ -50,48 +50,52 @@ class Forecast extends Component {
 
         {!loading && currentForecast ? (
           <div>
-            <div className="precipitation">
-              <h1 className="precipitation__title">
-                {currentForecast.precipitation.value}
-                {currentForecast.precipitation.unit}
-              </h1>
+            <div className="forecast">
+              <div className="precipitation">
+                <h1 className="precipitation__title">
+                  {currentForecast.precipitation.value}
+                  {currentForecast.precipitation.unit}
+                </h1>
 
-              <p className="precipitation__description">
-                <span className="typo-light">
-                  chance of rain <br />
-                  in the next
-                </span>{" "}
-                <strong>3 hours</strong>
-              </p>
-            </div>
-
-            <div className="main">
-              <div>
-                <p>
-                  {currentForecast.temperature.value}
-                  {currentForecast.temperature.unit}
-                </p>
-
-                <p>
-                  {currentForecast.temperature_feel.value}
-                  {currentForecast.temperature_feel.unit}
+                <p className="precipitation__description">
+                  <span className="typo-light">
+                    chance of rain <br />
+                    in the next
+                  </span>{" "}
+                  <strong>3 hours</strong>
                 </p>
               </div>
 
-              <div
-                className="brolly"
-                dangerouslySetInnerHTML={{ __html: brolly }}
-              />
+              <div className="main">
+                <div className="main__item">
+                  <p>
+                    {currentForecast.temperature.value}
+                    {currentForecast.temperature.unit}
+                  </p>
 
-              <div>
-                <p>
-                  {currentForecast.wind_speed.value}
-                  {currentForecast.wind_speed.unit}
-                </p>
+                  <p>
+                    {currentForecast.temperature_feel.value}
+                    {currentForecast.temperature_feel.unit}
+                  </p>
+                </div>
+
+                <div
+                  className="brolly"
+                  dangerouslySetInnerHTML={{ __html: brolly }}
+                />
+
+                <div className="main__item">
+                  <p>
+                    {currentForecast.wind_speed.value}
+                    {currentForecast.wind_speed.unit}
+                  </p>
+                </div>
               </div>
+
+              <h4 className="summary">{currentForecast.type.value}</h4>
             </div>
 
-            <h4 className="summary">{currentForecast.type.value}</h4>
+            <div className="forecast-hourly" />
           </div>
         ) : (
           <p>No forecast available</p>

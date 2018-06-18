@@ -2,13 +2,17 @@
 @import "../styles/responsive";
 
 .app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   margin: 0 auto;
   max-width: $mobile-landscape;
-  padding: 1.25rem;
+  padding: 1.25rem 0;
 }
 
 .logo {
   margin: 0.25rem 0 1.25rem 0;
+  padding: 0 1.25rem;
   text-align: center;
 }
 
@@ -17,7 +21,7 @@
   border-bottom: 1px solid rgba($white, 0.5);
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2.5rem;
+  margin: 0 1.25rem 2.5rem 1.25rem;
   padding-bottom: 0.5rem;
 }
 
@@ -25,4 +29,6 @@
   align-items: center;
   display: flex;
   justify-content: center;
+  margin-top: auto;
+  padding: 0 1.25rem 1.25rem;
 }

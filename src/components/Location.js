@@ -7,9 +7,13 @@ import "./Location.scss";
 class Location extends Component {
   requestLocation = updateLocation => {
     getGeoLocation().then(({ coords: { latitude, longitude } }) => {
-      const location = getClosestLocation({ latitude, longitude });
-
-      updateLocation(location);
+      getClosestLocation({ latitude, longitude })
+        .then(location => {
+          updateLocation(location);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     });
   };
 

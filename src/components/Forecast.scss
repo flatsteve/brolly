@@ -1,3 +1,9 @@
+@import "../styles/colours";
+
+.forecast {
+  margin-bottom: 2.5rem;
+}
+
 .precipitation {
   margin-bottom: 2.5rem;
   text-align: center;
@@ -15,6 +21,15 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
+  padding: 0 1.25rem;
+
+  &__item {
+    width: 5rem;
+
+    &:last-of-type {
+      text-align: right;
+    }
+  }
 }
 
 .brolly {
@@ -23,4 +38,11 @@
 
 .summary {
   text-align: center;
+}
+
+.forecast-hourly {
+  background-color: rgba($white, 0.15);
+  border-bottom: 1px solid rgba($white, 0.5);
+  border-top: 1px solid rgba($white, 0.5);
+  height: 5rem;
 }

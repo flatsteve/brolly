@@ -1,4 +1,5 @@
-import { LOCATIONS } from "../data/raw_data";
+import { getWeatherLocations } from "./met";
+import { get } from "lodash";
 
 export const getGeoLocation = () => {
   return new Promise((resolve, reject) => {
@@ -22,9 +23,33 @@ export const getClosestLocation = targetLocation => {
     return vectorDistance(dx, dy);
   }
 
-  return LOCATIONS.reduce((prev, curr) => {
-    const prevDistance = locationDistance(targetLocation, prev);
-    const currDistance = locationDistance(targetLocation, curr);
-    return prevDistance < currDistance ? prev : curr;
+  return new Promise((resolve, reject) => {
+    getWeatherLocations()
+      .then(res => {
+        let locations;
+
+        if (res.data) {
+          locations = get(res, "data.Locations.Location", null);
+
+          window.localStorage.setItem(
+            "brolly_locations",
+            JSON.stringify(locations)
+          );
+        } else {
+          locations = res;
+        }
+
+        resolve(
+          locations.reduce((prev, curr) => {
+            const prevDistance = locationDistance(targetLocation, prev);
+            const currDistance = locationDistance(targetLocation, curr);
+
+            return prevDistance < currDistance ? prev : curr;
+          })
+        );
+      })
+      .catch(error => {
+        reject(error);
+      });
   });
 };
