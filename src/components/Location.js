@@ -1,15 +1,20 @@
 import React, { Component } from "react";
 import { getGeoLocation, getClosestLocation } from "../services/geolocation";
 import { withStore } from "../data/store";
+import location from "../icons/location.svg";
 
 import "./Location.scss";
 
 class Location extends Component {
-  requestLocation = updateLocation => {
+  state = {
+    locationName: this.props.store.location.name
+  };
+
+  requestLocation = () => {
     getGeoLocation().then(({ coords: { latitude, longitude } }) => {
       getClosestLocation({ latitude, longitude })
         .then(location => {
-          updateLocation(location);
+          this.props.store.updateLocation(location);
         })
         .catch(error => {
           console.log(error);
@@ -18,14 +23,16 @@ class Location extends Component {
   };
 
   render() {
-    const { store } = this.props;
+    const { locationName } = this.state;
 
     return (
-      <div>
-        <input
-          className="location-input"
-          onFocus={() => this.requestLocation(store.updateLocation)}
-          value={store.location.name}
+      <div className="location">
+        <input className="location-input" defaultValue={locationName} />
+
+        <div
+          className="location-icon"
+          onClick={() => this.requestLocation()}
+          dangerouslySetInnerHTML={{ __html: location }}
         />
       </div>
     );

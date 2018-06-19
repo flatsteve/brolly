@@ -6,6 +6,7 @@ import {
 } from "../services/met";
 import { withStore } from "../data/store";
 import brolly from "../icons/brolly.svg";
+import temperature from "../icons/temperature.svg";
 
 import "./Forecast.scss";
 
@@ -77,16 +78,24 @@ class Forecast extends Component {
               </div>
 
               <div className="main">
-                <div className="main__item">
-                  <p>
-                    {currentForecast.temperature.value}
-                    {currentForecast.temperature.unit}
-                  </p>
+                <div className="main__item temperature">
+                  <div
+                    className="temperature__icon"
+                    dangerouslySetInnerHTML={{ __html: temperature }}
+                  />
 
-                  <p>
-                    {currentForecast.temperature_feel.value}
-                    {currentForecast.temperature_feel.unit}
-                  </p>
+                  <div className="temperature__info">
+                    <p>
+                      {currentForecast.temperature.value}
+                      {currentForecast.temperature.unit}
+                    </p>
+
+                    <p>
+                      {currentForecast.temperature_feel.value}
+                      {currentForecast.temperature_feel.unit}{" "}
+                      <small className="typo-light">(feels)</small>
+                    </p>
+                  </div>
                 </div>
 
                 <div

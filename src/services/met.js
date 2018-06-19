@@ -64,8 +64,8 @@ export const extract5DayForecast = rawdata => {
       hourlyForecast: day.Rep.map(forecast => {
         return {
           time: addMinutes(START_OF_DAY, forecast.$),
-          temperature: { value: forecast.T, unit: "C" },
-          temperature_feel: { value: forecast.F, unit: "C" },
+          temperature: { value: forecast.T, unit: "°" },
+          temperature_feel: { value: forecast.F, unit: "°" },
           precipitation: { value: forecast.Pp, unit: "%" },
           wind_speed: { value: forecast.S, unit: "mph" },
           wind_direction: { value: forecast.D, unit: null },

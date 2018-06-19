@@ -1,5 +1,10 @@
 @import "../styles/colours";
 
+.location {
+  align-items: center;
+  display: flex;
+}
+
 .location-input {
   background-color: transparent;
   border: none;
@@ -8,4 +13,9 @@
   &:focus {
     outline: none;
   }
+}
+
+.location-icon {
+  height: 1rem;
+  width: 1rem;
 }

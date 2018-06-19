@@ -24,7 +24,7 @@
   padding: 0 1.25rem;
 
   &__item {
-    width: 5rem;
+    width: 8rem;
 
     &:last-of-type {
       text-align: right;
@@ -34,6 +34,21 @@
 
 .brolly {
   width: 8rem;
+}
+
+.temperature {
+  align-items: center;
+  display: flex;
+
+  &__icon {
+    height: 2.25rem;
+    margin-right: 0.75rem;
+    width: 1rem;
+  }
+
+  &__info p {
+    margin: 0;
+  }
 }
 
 .summary {
