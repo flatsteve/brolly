@@ -29,7 +29,7 @@ class Forecast extends Component {
     const { location, updateForecast, forecast } = this.props.store;
 
     // FOR DEV TESTING ONLY - DONT REFRESH FORECAST EVERY TIME
-    if (forecast) {
+    if (window.location.hostname === "localhost" && forecast) {
       return this.setState({
         currentForecast: getCurrentForecast(forecast),
         loading: false
