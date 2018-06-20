@@ -1,3 +1,17 @@
-.date {
-  margin: 0;
+.date-picker {
+  align-items: center;
+  display: flex;
+
+  &__icon {
+    height: 1rem;
+    width: 1rem;
+
+    &--back {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__date {
+    margin: 0 0.75rem;
+  }
 }
