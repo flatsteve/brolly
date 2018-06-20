@@ -1,29 +1,57 @@
 import React, { Component } from "react";
-import { format } from "date-fns";
+import { subDays, addDays, format, isSameDay } from "date-fns";
 import { withStore } from "../data/store";
 import arrow from "../icons/arrow.svg";
 
 import "./DatePicker.scss";
 
 class DatePicker extends Component {
-  state = {
-    date: new Date()
+  setDate = type => {
+    const date = this.props.store.date;
+
+    if (type === "decrement") {
+      return this.props.store.updateDate(subDays(date, 1));
+    }
+
+    return this.props.store.updateDate(addDays(date, 1));
+  };
+
+  isDisabled = type => {
+    if (!this.props.store.forecast) {
+      return true;
+    }
+
+    const date = this.props.store.date;
+    const lastForecastDateAvailable = this.props.store.forecast[
+      this.props.store.forecast.length - 1
+    ].date;
+
+    if (type === "decrement") {
+      return isSameDay(date, new Date());
+    }
+
+    return isSameDay(date, lastForecastDateAvailable);
   };
 
   render() {
-    const { date } = this.state;
+    const { date } = this.props.store;
 
     return (
-      <div class="date-picker">
+      <div className="date-picker">
         <div
-          className="date-picker__icon date-picker__icon--back"
+          onClick={() => this.setDate("decrement")}
+          className={`date-picker__icon date-picker__icon--back ${this.isDisabled(
+            "decrement"
+          ) && "date-picker__icon--disabled"}`}
           dangerouslySetInnerHTML={{ __html: arrow }}
         />
 
         <p className="date-picker__date">{format(date, "ddd, Do MMM")}</p>
 
         <div
-          className="date-picker__icon"
+          onClick={this.setDate}
+          className={`date-picker__icon ${this.isDisabled() &&
+            "date-picker__icon--disabled"}`}
           dangerouslySetInnerHTML={{ __html: arrow }}
         />
       </div>

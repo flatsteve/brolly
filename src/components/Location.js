@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { getGeoLocation, getClosestLocation } from "../services/geolocation";
 import { withStore } from "../data/store";
-import location from "../icons/location.svg";
+import locationIcon from "../icons/location.svg";
 
 import "./Location.scss";
 
 class Location extends Component {
-  state = {
-    locationName: this.props.store.location.name
-  };
+  shouldComponentUpdate(nextProps) {
+    return nextProps.store.location.id !== this.props.store.location.id;
+  }
 
   requestLocation = () => {
     getGeoLocation().then(({ coords: { latitude, longitude } }) => {
@@ -23,16 +23,17 @@ class Location extends Component {
   };
 
   render() {
-    const { locationName } = this.state;
+    console.log("LOCATION RERENDERED");
+    const { location } = this.props.store;
 
     return (
       <div className="location">
-        <input className="location-input" defaultValue={locationName} />
+        <input className="location-input" value={location.name} />
 
         <div
           className="location-icon"
           onClick={() => this.requestLocation()}
-          dangerouslySetInnerHTML={{ __html: location }}
+          dangerouslySetInnerHTML={{ __html: locationIcon }}
         />
       </div>
     );

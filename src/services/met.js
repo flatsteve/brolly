@@ -1,9 +1,8 @@
 import axios from "axios";
-import { get } from "lodash-es/get";
+import get from "lodash-es/get";
 import { addMinutes, isSameDay, isBefore } from "date-fns";
 import { getItem } from "../services/storage";
 
-const CURRENT_DATE_TIME = new Date();
 const START_OF_DAY = new Date().setHours(0, 0, 0, 0);
 const API_KEY = "4f2d4f02-ef8c-43cb-a2ce-a96855b01ac7";
 const BASE_URL = "//datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/";
@@ -42,7 +41,7 @@ const WEATHER_TYPES = {
 
 export const getWeatherLocations = () => {
   if (getItem("locations")) {
-    return Promise.resolve(getItem("brolly_locations"));
+    return Promise.resolve(getItem("locations"));
   }
 
   return axios(`${BASE_URL}sitelist?key=${API_KEY}`);
@@ -79,29 +78,38 @@ export const extract5DayForecast = rawdata => {
   return formattedForecast;
 };
 
-export const getCurrentDayForecast = (forecast, date = CURRENT_DATE_TIME) => {
+export const getDailyForecasts = (forecast, date) => {
   if (!forecast) {
     return;
   }
 
-  const currentDayForecast = forecast.find(dailyForecast => {
+  const daysForecast = forecast.find(dailyForecast => {
     return isSameDay(dailyForecast.date, date);
   });
 
-  console.log("CURRENT DAY FORECASTS", currentDayForecast);
-  return currentDayForecast;
+  console.log("CURRENT DAY FORECASTS", daysForecast);
+  return daysForecast;
 };
 
-export const getCurrentTimeForecast = forecast => {
-  const currentDayForecast = getCurrentDayForecast(forecast);
+export const getForecastForTime = (forecast, date) => {
+  if (!forecast) {
+    return;
+  }
 
-  const currentTimeForecast = currentDayForecast.hourlyForecast.reduce(
-    (prev, curr) => {
-      return isBefore(curr.time, CURRENT_DATE_TIME) ? curr : prev;
-    }
-  );
+  const daysForecast = getDailyForecasts(forecast, date);
+  let forecastForTime;
 
-  console.log("CURRENT FORECAST FOR HOUR", currentTimeForecast);
+  if (isSameDay(date, new Date())) {
+    // If today then use current time
+    forecastForTime = daysForecast.hourlyForecast.reduce((prev, curr) => {
+      return isBefore(curr.time, date) ? curr : prev;
+    });
+  } else {
+    // If not show the first time we have for that day
+    forecastForTime = daysForecast.hourlyForecast[0];
+  }
 
-  return currentTimeForecast;
+  console.log("CURRENT FORECAST FOR HOUR", forecastForTime);
+
+  return forecastForTime;
 };

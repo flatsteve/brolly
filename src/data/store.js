@@ -14,6 +14,8 @@ const Provider = store.Provider;
 
 export class AppProvider extends Component {
   state = {
+    date: new Date(),
+    updateDate: date => this.setState({ date }),
     location: getItem("location") || INITIAL_LOCATION,
     updateLocation: location => this.setState({ location }),
     forecast: getItem("forecast") || null,

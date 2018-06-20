@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { isSameDay } from "date-fns";
 import {
   getWeatherForecast,
   extract5DayForecast,
-  getCurrentTimeForecast,
-  getCurrentDayForecast
+  getForecastForTime,
+  getDailyForecasts
 } from "../services/met";
 import { withStore } from "../data/store";
 import HourlyForecast from "./HourlyForecast";
@@ -24,20 +25,24 @@ class Forecast extends Component {
     this.getForecast();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.store.location.id !== this.props.store.location.id) {
+  componentDidUpdate(prevProps) {
+    // Only update if the date or location changed
+    if (
+      prevProps.store.location.id !== this.props.store.location.id ||
+      !isSameDay(prevProps.store.date, this.props.store.date)
+    ) {
       this.getForecast();
     }
   }
 
   getForecast() {
-    const { location, updateForecast, forecast } = this.props.store;
+    const { date, location, updateForecast, forecast } = this.props.store;
 
     // FOR DEV TESTING ONLY - DONT REFRESH FORECAST EVERY TIME
     if (window.location.hostname === "localhost" && forecast) {
       return this.setState({
-        currentDayForecast: getCurrentDayForecast(forecast),
-        currentTimeForecast: getCurrentTimeForecast(forecast),
+        currentDayForecast: getDailyForecasts(forecast, date),
+        currentTimeForecast: getForecastForTime(forecast, date),
         loading: false
       });
     }
@@ -48,8 +53,8 @@ class Forecast extends Component {
         updateForecast(forecast);
 
         this.setState({
-          currentDayForecast: getCurrentDayForecast(forecast),
-          currentTimeForecast: getCurrentTimeForecast(forecast),
+          currentDayForecast: getDailyForecasts(forecast, date),
+          currentTimeForecast: getForecastForTime(forecast, date),
           loading: false
         });
       })
@@ -59,6 +64,7 @@ class Forecast extends Component {
   }
 
   render() {
+    console.log("FORECAST RERENDERED");
     const { loading, currentTimeForecast, currentDayForecast } = this.state;
 
     return (
