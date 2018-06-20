@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { subDays, addDays, format, isSameDay } from "date-fns";
 import { withStore } from "../data/store";
-import arrow from "../icons/arrow.svg";
+import arrowIcon from "../icons/arrow.svg";
 
 import "./DatePicker.scss";
 
@@ -43,7 +43,7 @@ class DatePicker extends Component {
           className={`date-picker__icon date-picker__icon--back ${this.isDisabled(
             "decrement"
           ) && "date-picker__icon--disabled"}`}
-          dangerouslySetInnerHTML={{ __html: arrow }}
+          dangerouslySetInnerHTML={{ __html: arrowIcon }}
         />
 
         <p className="date-picker__date">{format(date, "ddd, Do MMM")}</p>
@@ -52,7 +52,7 @@ class DatePicker extends Component {
           onClick={this.setDate}
           className={`date-picker__icon ${this.isDisabled() &&
             "date-picker__icon--disabled"}`}
-          dangerouslySetInnerHTML={{ __html: arrow }}
+          dangerouslySetInnerHTML={{ __html: arrowIcon }}
         />
       </div>
     );

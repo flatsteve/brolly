@@ -8,9 +8,9 @@ import {
 } from "../services/met";
 import { withStore } from "../data/store";
 import HourlyForecast from "./HourlyForecast";
-import brolly from "../icons/brolly.svg";
-import temperature from "../icons/temperature.svg";
-import wind from "../icons/wind.svg";
+import brollyIcon from "../icons/brolly.svg";
+import temperatureIcon from "../icons/temperature.svg";
+import windIcon from "../icons/wind.svg";
 
 import "./Forecast.scss";
 
@@ -93,7 +93,7 @@ class Forecast extends Component {
                 <div className="main__item temperature">
                   <div
                     className="temperature__icon"
-                    dangerouslySetInnerHTML={{ __html: temperature }}
+                    dangerouslySetInnerHTML={{ __html: temperatureIcon }}
                   />
 
                   <div>
@@ -112,13 +112,13 @@ class Forecast extends Component {
 
                 <div
                   className="brolly"
-                  dangerouslySetInnerHTML={{ __html: brolly }}
+                  dangerouslySetInnerHTML={{ __html: brollyIcon }}
                 />
 
                 <div className="main__item wind">
                   <div
                     className="wind__icon"
-                    dangerouslySetInnerHTML={{ __html: wind }}
+                    dangerouslySetInnerHTML={{ __html: windIcon }}
                   />
 
                   <p>
