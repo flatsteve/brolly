@@ -29,6 +29,10 @@
     &:last-of-type {
       text-align: right;
     }
+
+    p {
+      margin: 0;
+    }
   }
 }
 
@@ -39,15 +43,22 @@
 .temperature {
   align-items: center;
   display: flex;
+  justify-content: center;
 
   &__icon {
     height: 2.25rem;
     margin-right: 0.75rem;
     width: 1rem;
   }
+}
 
-  &__info p {
-    margin: 0;
+.wind {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  &__icon {
+    width: 2rem;
   }
 }
 

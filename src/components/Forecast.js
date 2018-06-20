@@ -7,6 +7,7 @@ import {
 import { withStore } from "../data/store";
 import brolly from "../icons/brolly.svg";
 import temperature from "../icons/temperature.svg";
+import wind from "../icons/wind.svg";
 
 import "./Forecast.scss";
 
@@ -84,7 +85,7 @@ class Forecast extends Component {
                     dangerouslySetInnerHTML={{ __html: temperature }}
                   />
 
-                  <div className="temperature__info">
+                  <div>
                     <p>
                       {currentForecast.temperature.value}
                       {currentForecast.temperature.unit}
@@ -103,10 +104,17 @@ class Forecast extends Component {
                   dangerouslySetInnerHTML={{ __html: brolly }}
                 />
 
-                <div className="main__item">
+                <div className="main__item wind">
+                  <div
+                    className="wind__icon"
+                    dangerouslySetInnerHTML={{ __html: wind }}
+                  />
+
                   <p>
                     {currentForecast.wind_speed.value}
-                    {currentForecast.wind_speed.unit}
+                    <small className="typo-light">
+                      {currentForecast.wind_speed.unit}
+                    </small>
                   </p>
                 </div>
               </div>
