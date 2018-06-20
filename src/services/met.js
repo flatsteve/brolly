@@ -1,5 +1,5 @@
 import axios from "axios";
-import { get } from "lodash";
+import { get } from "lodash-es/get";
 import { addMinutes, isSameDay, isBefore } from "date-fns";
 import { getItem } from "../services/storage";
 

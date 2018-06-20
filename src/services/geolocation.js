@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import get from "lodash-es/get";
 import { getWeatherLocations } from "./met";
 import { setItem } from "./storage";
 
