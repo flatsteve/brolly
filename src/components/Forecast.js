@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import {
   getWeatherForecast,
   extract5DayForecast,
-  getCurrentForecast
+  getCurrentTimeForecast,
+  getCurrentDayForecast
 } from "../services/met";
 import { withStore } from "../data/store";
+import HourlyForecast from "./HourlyForecast";
 import brolly from "../icons/brolly.svg";
 import temperature from "../icons/temperature.svg";
 import wind from "../icons/wind.svg";
@@ -14,7 +16,8 @@ import "./Forecast.scss";
 class Forecast extends Component {
   state = {
     loading: true,
-    currentForecast: null
+    currentDayForecast: null,
+    currentTimeForecast: null
   };
 
   componentDidMount() {
@@ -33,7 +36,8 @@ class Forecast extends Component {
     // FOR DEV TESTING ONLY - DONT REFRESH FORECAST EVERY TIME
     if (window.location.hostname === "localhost" && forecast) {
       return this.setState({
-        currentForecast: getCurrentForecast(forecast),
+        currentDayForecast: getCurrentDayForecast(forecast),
+        currentTimeForecast: getCurrentTimeForecast(forecast),
         loading: false
       });
     }
@@ -44,7 +48,8 @@ class Forecast extends Component {
         updateForecast(forecast);
 
         this.setState({
-          currentForecast: getCurrentForecast(forecast),
+          currentDayForecast: getCurrentDayForecast(forecast),
+          currentTimeForecast: getCurrentTimeForecast(forecast),
           loading: false
         });
       })
@@ -54,19 +59,19 @@ class Forecast extends Component {
   }
 
   render() {
-    const { loading, currentForecast } = this.state;
+    const { loading, currentTimeForecast, currentDayForecast } = this.state;
 
     return (
       <div>
         {loading && <p>Loading...</p>}
 
-        {!loading && currentForecast ? (
+        {!loading && currentTimeForecast ? (
           <div>
             <div className="forecast">
               <div className="precipitation">
                 <h1 className="precipitation__title">
-                  {currentForecast.precipitation.value}
-                  {currentForecast.precipitation.unit}
+                  {currentTimeForecast.precipitation.value}
+                  {currentTimeForecast.precipitation.unit}
                 </h1>
 
                 <p className="precipitation__description">
@@ -87,13 +92,13 @@ class Forecast extends Component {
 
                   <div>
                     <p>
-                      {currentForecast.temperature.value}
-                      {currentForecast.temperature.unit}
+                      {currentTimeForecast.temperature.value}
+                      {currentTimeForecast.temperature.unit}
                     </p>
 
                     <p>
-                      {currentForecast.temperature_feel.value}
-                      {currentForecast.temperature_feel.unit}{" "}
+                      {currentTimeForecast.temperature_feel.value}
+                      {currentTimeForecast.temperature_feel.unit}{" "}
                       <small className="typo-light">(feels)</small>
                     </p>
                   </div>
@@ -111,18 +116,18 @@ class Forecast extends Component {
                   />
 
                   <p>
-                    {currentForecast.wind_speed.value}
+                    {currentTimeForecast.wind_speed.value}
                     <small className="typo-light">
-                      {currentForecast.wind_speed.unit}
+                      {currentTimeForecast.wind_speed.unit}
                     </small>
                   </p>
                 </div>
               </div>
 
-              <h4 className="summary">{currentForecast.type.value}</h4>
+              <h4 className="summary">{currentTimeForecast.type.value}</h4>
             </div>
 
-            <div className="forecast-hourly" />
+            <HourlyForecast forecasts={currentDayForecast.hourlyForecast} />
           </div>
         ) : (
           <p>No forecast available</p>

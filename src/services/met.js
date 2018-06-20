@@ -3,6 +3,7 @@ import { get } from "lodash-es/get";
 import { addMinutes, isSameDay, isBefore } from "date-fns";
 import { getItem } from "../services/storage";
 
+const CURRENT_DATE_TIME = new Date();
 const START_OF_DAY = new Date().setHours(0, 0, 0, 0);
 const API_KEY = "4f2d4f02-ef8c-43cb-a2ce-a96855b01ac7";
 const BASE_URL = "//datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/";
@@ -78,25 +79,29 @@ export const extract5DayForecast = rawdata => {
   return formattedForecast;
 };
 
-export const getCurrentForecast = forecast => {
+export const getCurrentDayForecast = (forecast, date = CURRENT_DATE_TIME) => {
   if (!forecast) {
     return;
   }
 
-  const currentDateTime = new Date();
-  const currentDayForcast = forecast.find(dailyForecast => {
-    return isSameDay(dailyForecast.date, currentDateTime);
+  const currentDayForecast = forecast.find(dailyForecast => {
+    return isSameDay(dailyForecast.date, date);
   });
 
-  console.log("CURRENT DAY FORECAST", currentDayForcast);
+  console.log("CURRENT DAY FORECASTS", currentDayForecast);
+  return currentDayForecast;
+};
 
-  const currentTimeForecast = currentDayForcast.hourlyForecast.reduce(
+export const getCurrentTimeForecast = forecast => {
+  const currentDayForecast = getCurrentDayForecast(forecast);
+
+  const currentTimeForecast = currentDayForecast.hourlyForecast.reduce(
     (prev, curr) => {
-      return isBefore(curr.time, currentDateTime) ? curr : prev;
+      return isBefore(curr.time, CURRENT_DATE_TIME) ? curr : prev;
     }
   );
 
-  console.log("CURRENT", currentTimeForecast);
+  console.log("CURRENT FORECAST FOR HOUR", currentTimeForecast);
 
   return currentTimeForecast;
 };
