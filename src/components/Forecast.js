@@ -65,6 +65,14 @@ class Forecast extends Component {
       });
   }
 
+  getBrollyRotation = () => {
+    const { value } = this.state.currentTimeForecast.precipitation;
+
+    return {
+      transform: `rotate(-${180 / (100 / value)}deg)`
+    };
+  };
+
   render() {
     console.log("FORECAST RERENDERED");
     const { loading, currentTimeForecast, currentDayForecast } = this.state;
@@ -118,6 +126,7 @@ class Forecast extends Component {
 
                 <div
                   className="brolly"
+                  style={this.getBrollyRotation()}
                   dangerouslySetInnerHTML={{ __html: brollyIcon }}
                 />
 
