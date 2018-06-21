@@ -5,9 +5,9 @@ import "./GradientBackground.scss";
 
 class GradientBackground extends Component {
   render() {
-    return (
-      <div className="background background--low">{this.props.children}</div>
-    );
+    const bkClass = this.props.type;
+
+    return <div className={`background background--${bkClass}`} />;
   }
 }
 

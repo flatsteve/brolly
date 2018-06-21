@@ -7,36 +7,36 @@ const START_OF_DAY = new Date().setHours(0, 0, 0, 0);
 const API_KEY = "4f2d4f02-ef8c-43cb-a2ce-a96855b01ac7";
 const BASE_URL = "//datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/";
 const WEATHER_TYPES = {
-  0: "Clear night",
-  1: "Sunny day",
-  2: "Partly cloudy (night)",
-  3: "Partly cloudy (day)",
-  5: "Mist",
-  6: "Fog",
-  7: "Cloudy",
-  8: "Overcast",
-  9: "Light rain shower (night)",
-  10: "Light rain shower (day)",
-  11: "Drizzle",
-  12: "Light rain",
-  13: "Heavy rain shower (night)",
-  14: "Heavy rain shower (day)",
-  15: "Heavy rain",
-  16: "Sleet shower (night)",
-  17: "Sleet shower (day)",
-  18: "Sleet",
-  19: "Hail shower (night)",
-  20: "Hail shower (day)",
-  21: "Hail",
-  22: "Light snow shower (night)",
-  23: "Light snow shower (day)",
-  24: "Light snow",
-  25: "Heavy snow shower (night)",
-  26: "Heavy snow shower (day)",
-  27: "Heavy snow",
-  28: "Thunder shower (night)",
-  29: "Thunder shower (day)",
-  30: "Thunder"
+  0: { class: "clear-night", description: "Clear night" },
+  1: { class: "sunny", description: "Sunny day" },
+  2: { class: "partly-cloudy", description: "Partly cloudy (night)" },
+  3: { class: "partly-cloudy", description: "Partly cloudy (day)" },
+  5: { class: "partly-cloudy", description: "Mist" },
+  6: { class: "partly-cloudy", description: "Fog" },
+  7: { class: "cloudy", description: "Cloudy" },
+  8: { class: "cloudy", description: "Overcast" },
+  9: { class: "light-rain", description: "Light rain shower (night)" },
+  10: { class: "light-rain", description: "Light rain shower (day)" },
+  11: { class: "light-rain", description: "Drizzle" },
+  12: { class: "light-rain", description: "Light rain" },
+  13: { class: "heavy-rain", description: "Heavy rain shower (night)" },
+  14: { class: "heavy-rain", description: "Heavy rain shower (day)" },
+  15: { class: "heavy-rain", description: "Heavy rain" },
+  16: { class: "light-snow", description: "Sleet shower (night)" },
+  17: { class: "light-snow", description: "Sleet shower (day)" },
+  18: { class: "light-snow", description: "Sleet" },
+  19: { class: "light-snow", description: "Hail shower (night)" },
+  20: { class: "light-snow", description: "Hail shower (day)" },
+  21: { class: "light-snow", description: "Hail" },
+  22: { class: "light-snow", description: "Light snow shower (night)" },
+  23: { class: "light-snow", description: "Light snow shower (day)" },
+  24: { class: "light-snow", description: "Light snow" },
+  25: { class: "heavy-snow", description: "Heavy snow shower (night)" },
+  26: { class: "heavy-snow", description: "Heavy snow shower (day)" },
+  27: { class: "heavy-snow", description: "Heavy snow" },
+  28: { class: "thunder", description: "Thunder shower (night)" },
+  29: { class: "thunder", description: "Thunder shower (day)" },
+  30: { class: "thunder", description: "Thunder" }
 };
 
 export const getWeatherLocations = () => {
@@ -69,7 +69,7 @@ export const extract5DayForecast = rawdata => {
           precipitation: { value: forecast.Pp, unit: "%" },
           wind_speed: { value: forecast.S, unit: "mph" },
           wind_direction: { value: forecast.D, unit: null },
-          type: { value: WEATHER_TYPES[forecast.W], unit: null }
+          type: WEATHER_TYPES[forecast.W]
         };
       })
     };
