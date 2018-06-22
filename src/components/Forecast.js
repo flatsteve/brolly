@@ -65,6 +65,12 @@ class Forecast extends Component {
       });
   }
 
+  updateCurrentTimeForecast = forecast => {
+    this.setState({
+      currentTimeForecast: forecast
+    });
+  };
+
   getBrollyRotation = () => {
     const { value } = this.state.currentTimeForecast.precipitation;
 
@@ -150,7 +156,10 @@ class Forecast extends Component {
               </h4>
             </div>
 
-            <HourlyForecast forecasts={currentDayForecast.hourlyForecast} />
+            <HourlyForecast
+              forecasts={currentDayForecast.hourlyForecast}
+              updateCurrentTimeForecast={this.updateCurrentTimeForecast}
+            />
           </div>
         ) : (
           <p>No forecast available</p>

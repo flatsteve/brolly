@@ -2,13 +2,13 @@ import React, { Component, createContext } from "react";
 import { getItem, setItem } from "../services/storage";
 
 const INITIAL_LOCATION = {
-  elevation: "39.0",
-  id: "351819",
-  latitude: "51.5127",
-  longitude: "-3.188",
-  name: "Heath",
-  region: "wl",
-  unitaryAuthArea: "Cardiff"
+  elevation: "4.0",
+  id: "99015",
+  latitude: "54.067",
+  longitude: "-6.183",
+  name: "Killowen",
+  region: "ni",
+  unitaryAuthArea: "County Down"
 };
 
 const store = createContext({ location: INITIAL_LOCATION });
