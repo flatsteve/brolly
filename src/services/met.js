@@ -2,7 +2,6 @@ import axios from "axios";
 import get from "lodash-es/get";
 import { addMinutes, isSameDay, isBefore } from "date-fns";
 
-const START_OF_DAY = new Date().setHours(0, 0, 0, 0);
 const API_KEY = "4f2d4f02-ef8c-43cb-a2ce-a96855b01ac7";
 const BASE_URL = "//datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/";
 const WEATHER_TYPES = {
@@ -54,7 +53,10 @@ export const extract5DayForecast = rawdata => {
       date: day.value,
       hourlyForecast: day.Rep.map(forecast => {
         return {
-          time: addMinutes(START_OF_DAY, forecast.$),
+          time: addMinutes(
+            new Date(day.value).setHours(0, 0, 0, 0),
+            forecast.$
+          ),
           temperature: { value: forecast.T, unit: "°" },
           temperature_feel: { value: forecast.F, unit: "°" },
           precipitation: { value: forecast.Pp, unit: "%" },
@@ -78,7 +80,7 @@ export const getDailyForecasts = (forecast, date) => {
     return isSameDay(dailyForecast.date, date);
   });
 
-  console.log("CURRENT DAY FORECASTS", daysForecast);
+  console.log("THE FORECAST FOR THE DAY", daysForecast);
   return daysForecast;
 };
 

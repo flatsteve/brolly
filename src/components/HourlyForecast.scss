@@ -28,5 +28,15 @@
       margin: 0;
       white-space: nowrap;
     }
+
+    &--past {
+      opacity: 0.5;
+    }
+
+    &--current {
+      small {
+        font-weight: bold;
+      }
+    }
   }
 }
