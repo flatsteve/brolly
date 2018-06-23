@@ -1,11 +1,19 @@
 import React from "react";
-import { mount } from "enzyme";
+import { shallow } from "enzyme";
+import { Location } from "./Location";
 
-import Location from "./Location";
+const mockStore = {
+  location: {
+    id: 1,
+    name: "Glasgow"
+  }
+};
 
 describe("<Location />", () => {
-  it("renders the Location", () => {
-    const wrapper = mount(<Location />);
-    console.log(wrapper.debug());
+  it("renders the location name in an input", () => {
+    const wrapper = shallow(<Location store={mockStore} />);
+    const input = wrapper.find(".location-input");
+
+    expect(input.props().value).toEqual("Glasgow");
   });
 });

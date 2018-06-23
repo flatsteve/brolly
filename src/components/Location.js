@@ -5,7 +5,7 @@ import locationIcon from "../icons/location.svg";
 
 import "./Location.scss";
 
-class Location extends Component {
+export class Location extends Component {
   shouldComponentUpdate(nextProps) {
     return nextProps.store.location.id !== this.props.store.location.id;
   }
@@ -21,7 +21,6 @@ class Location extends Component {
   };
 
   render() {
-    console.log("LOCATION RERENDERED");
     const { location } = this.props.store;
 
     return (

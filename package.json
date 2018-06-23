@@ -33,6 +33,7 @@
     "start": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
     "test": "jest",
+    "test-tdd": "jest --watch",
     "stats": "webpack --json | webpack-bundle-size-analyzer"
   },
   "dependencies": {
