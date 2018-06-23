@@ -1,9 +1,8 @@
 import axios from "axios";
 import get from "lodash-es/get";
 import { addMinutes, isSameDay, isBefore } from "date-fns";
+import { API_URL } from "./api";
 
-const API_KEY = "4f2d4f02-ef8c-43cb-a2ce-a96855b01ac7";
-const BASE_URL = "//datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/";
 const WEATHER_TYPES = {
   0: { class: "clear-night", description: "Clear night" },
   1: { class: "sunny", description: "Sunny day" },
@@ -38,7 +37,9 @@ const WEATHER_TYPES = {
 };
 
 export const getWeatherForecast = locationID => {
-  return axios(`${BASE_URL}${locationID}?res=3hourly&key=${API_KEY}`);
+  return axios.post(`${API_URL}/forecast/`, {
+    locationID
+  });
 };
 
 export const extract5DayForecast = rawdata => {

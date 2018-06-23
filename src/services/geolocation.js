@@ -1,6 +1,5 @@
 import axios from "axios";
-
-const API_URL = "https://flatsteve.lib.id/brolly";
+import { API_URL } from "./api";
 
 export const getGeoLocation = () => {
   return new Promise((resolve, reject) => {
@@ -14,10 +13,8 @@ export const getGeoLocation = () => {
 
 export const getClosestLocation = () => {
   return getGeoLocation().then(({ coords: { latitude, longitude } }) => {
-    return axios(API_URL, {
-      params: {
-        targetLocation: JSON.stringify({ latitude, longitude })
-      }
+    return axios.post(`${API_URL}/location/`, {
+      targetLocation: JSON.stringify({ latitude, longitude })
     });
   });
 };
