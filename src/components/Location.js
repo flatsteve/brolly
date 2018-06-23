@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getGeoLocation, getClosestLocation } from "../services/geolocation";
+import { getClosestLocation } from "../services/geolocation";
 import { withStore } from "../data/store";
 import locationIcon from "../icons/location.svg";
 
@@ -11,15 +11,13 @@ class Location extends Component {
   }
 
   requestLocation = () => {
-    getGeoLocation().then(({ coords: { latitude, longitude } }) => {
-      getClosestLocation({ latitude, longitude })
-        .then(location => {
-          this.props.store.updateLocation(location);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    });
+    getClosestLocation()
+      .then(res => {
+        this.props.store.updateLocation(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   render() {

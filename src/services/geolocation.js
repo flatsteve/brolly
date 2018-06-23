@@ -1,6 +1,6 @@
-import get from "lodash-es/get";
-import { getWeatherLocations } from "./met";
-import { setItem } from "./storage";
+import axios from "axios";
+
+const API_URL = "https://flatsteve.lib.id/brolly";
 
 export const getGeoLocation = () => {
   return new Promise((resolve, reject) => {
@@ -12,41 +12,12 @@ export const getGeoLocation = () => {
   });
 };
 
-export const getClosestLocation = targetLocation => {
-  function vectorDistance(dx, dy) {
-    return Math.sqrt(dx * dx + dy * dy);
-  }
-
-  function locationDistance(location1, location2) {
-    const dx = location1.latitude - location2.latitude;
-    const dy = location1.longitude - location2.longitude;
-
-    return vectorDistance(dx, dy);
-  }
-
-  return new Promise((resolve, reject) => {
-    getWeatherLocations()
-      .then(res => {
-        let locations;
-
-        if (res.data) {
-          locations = get(res, "data.Locations.Location", null);
-          setItem("locations", locations);
-        } else {
-          locations = res;
-        }
-
-        resolve(
-          locations.reduce((prev, curr) => {
-            const prevDistance = locationDistance(targetLocation, prev);
-            const currDistance = locationDistance(targetLocation, curr);
-
-            return prevDistance < currDistance ? prev : curr;
-          })
-        );
-      })
-      .catch(error => {
-        reject(error);
-      });
+export const getClosestLocation = () => {
+  return getGeoLocation().then(({ coords: { latitude, longitude } }) => {
+    return axios(API_URL, {
+      params: {
+        targetLocation: JSON.stringify({ latitude, longitude })
+      }
+    });
   });
 };

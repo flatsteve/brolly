@@ -1,7 +1,6 @@
 import axios from "axios";
 import get from "lodash-es/get";
 import { addMinutes, isSameDay, isBefore } from "date-fns";
-import { getItem } from "../services/storage";
 
 const START_OF_DAY = new Date().setHours(0, 0, 0, 0);
 const API_KEY = "4f2d4f02-ef8c-43cb-a2ce-a96855b01ac7";
@@ -37,14 +36,6 @@ const WEATHER_TYPES = {
   28: { class: "thunder", description: "Thunder shower (night)" },
   29: { class: "thunder", description: "Thunder shower (day)" },
   30: { class: "thunder", description: "Thunder" }
-};
-
-export const getWeatherLocations = () => {
-  if (getItem("locations")) {
-    return Promise.resolve(getItem("locations"));
-  }
-
-  return axios(`${BASE_URL}sitelist?key=${API_KEY}`);
 };
 
 export const getWeatherForecast = locationID => {
