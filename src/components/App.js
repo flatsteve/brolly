@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 
 import { AppProvider } from "../data/store";
 
-import GradientBackground from "./GradientBackground";
 import Location from "./Location";
 import DatePicker from "./DatePicker";
 import Forecast from "./Forecast";
@@ -15,8 +14,6 @@ export default class App extends Component {
   render() {
     return (
       <AppProvider>
-        <GradientBackground />
-
         <div className="app">
           <h2 className="logo">Brolly</h2>
 

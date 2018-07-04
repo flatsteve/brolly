@@ -1,17 +1,10 @@
 @import "../styles/colours";
 @import "../styles/responsive";
 
-#app,
-.app {
-  height: 100%;
-}
-
 .app {
   margin: 0 auto;
   max-width: $mobile-landscape;
   padding: 1.25rem 0;
-  position: relative;
-  z-index: 999;
 }
 
 .logo {

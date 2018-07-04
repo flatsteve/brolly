@@ -8,6 +8,7 @@ import {
 } from "../services/met";
 import { withStore } from "../data/store";
 
+import GradientBackground from "./GradientBackground";
 import HourlyForecast from "./HourlyForecast";
 import brollyIcon from "../icons/brolly.svg";
 import temperatureIcon from "../icons/temperature.svg";
@@ -84,6 +85,10 @@ class Forecast extends Component {
 
     return (
       <div>
+        <GradientBackground
+          type={currentTimeForecast ? currentTimeForecast.type.class : null}
+        />
+
         {loading && <p>Loading...</p>}
 
         {!loading && currentTimeForecast ? (
