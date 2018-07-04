@@ -24,7 +24,7 @@
   padding: 0 1.25rem;
 
   &__item {
-    width: 8rem;
+    width: 33%;
 
     &:last-of-type {
       text-align: right;
@@ -38,7 +38,7 @@
 
 .brolly {
   transition: all 0.3s ease-in;
-  width: 8rem;
+  width: 33%;
 }
 
 .temperature {
