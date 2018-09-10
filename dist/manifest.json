@@ -1,7 +1,7 @@
 {
   "short_name": "Brolly",
   "name": "Brolly",
-  "start_url": "/",
+  "start_url": "/brolly/",
   "background_color": "#00a8ff",
   "display": "standalone",
   "theme_color": "#00a8ff",
