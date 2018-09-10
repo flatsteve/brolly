@@ -46,6 +46,9 @@ module.exports = {
       navigateFallback: PUBLIC_PATH + "index.html",
       staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/]
     }),
-    new CopyWebpackPlugin([{ from: "public/icons", to: "icons" }])
+    new CopyWebpackPlugin([
+      { from: "public/icons", to: "icons" },
+      { from: "./manifest.json", to: "manifest.json" }
+    ])
   ]
 };

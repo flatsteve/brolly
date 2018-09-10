@@ -12,5 +12,7 @@ Really just an excuse to learn some new React APIs and mess around.
 ### Deployment
 
 - Build production: `yarn build`
-- Add & commit: `git add dist && git commit -m "Release app"`
+- Add & commit: `git add dist -f && git commit -m "Release app"`
 - Push to gh-pages: `git subtree push --prefix dist origin gh-pages`
+
+_Note: may have to delete the `gh-pages` branch on github first_
