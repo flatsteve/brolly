@@ -2,9 +2,9 @@
   "short_name": "Brolly",
   "name": "Brolly",
   "start_url": "/brolly",
-  "background_color": "#00a8ff",
+  "background_color": "#457FCA",
   "display": "standalone",
-  "theme_color": "#00a8ff",
+  "theme_color": "#000000",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
