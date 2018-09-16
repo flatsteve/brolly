@@ -5,7 +5,7 @@ import { AppProvider } from "../data/store";
 
 import Location from "./Location";
 import DatePicker from "./DatePicker";
-import Forecast from "./Forecast";
+import ForecastContainer from "./ForecastContainer";
 
 import "../styles/styles.scss";
 import "./app.scss";
@@ -22,16 +22,7 @@ export default class App extends Component {
             <DatePicker />
           </div>
 
-          <Forecast />
-
-          <p className="footer-made">
-            <small>
-              Made with <span className="typo-emoji">🍻</span> by{" "}
-              <a href="http://www.flatsteve.com" target="_blank">
-                Flatsteve
-              </a>
-            </small>
-          </p>
+          <ForecastContainer />
         </div>
       </AppProvider>
     );
