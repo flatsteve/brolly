@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import { AppProvider } from "../data/store";
 
+import logoIcon from "../icons/logo.svg";
 import Location from "./Location";
 import DatePicker from "./DatePicker";
 import ForecastContainer from "./ForecastContainer";
@@ -15,7 +16,10 @@ export default class App extends Component {
     return (
       <AppProvider>
         <div className="app">
-          <h2 className="logo">Brolly</h2>
+          <div
+            className="logo"
+            dangerouslySetInnerHTML={{ __html: logoIcon }}
+          />
 
           <div className="app-controls">
             <Location />

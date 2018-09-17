@@ -1,3 +1,4 @@
+const webpack = require("webpack");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const SWPrecacheWebpackPlugin = require("sw-precache-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
@@ -6,6 +7,9 @@ const PUBLIC_PATH = "https://flatsteve.com/brolly/";
 
 module.exports = {
   devtool: "source-map",
+  devServer: {
+    hot: true
+  },
   module: {
     rules: [
       {
@@ -49,6 +53,7 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: "public/icons", to: "icons" },
       { from: "./manifest.json", to: "manifest.json" }
-    ])
+    ]),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };

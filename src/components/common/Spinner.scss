@@ -1,0 +1,32 @@
+@import "../../styles/colours";
+
+.spinner {
+  $size: 14px;
+  &:after {
+    display: block;
+    content: " ";
+    border: 2px solid $white;
+    border-left-color: fade-out($white, 0.5);
+    border-radius: $size;
+    width: $size;
+    height: $size;
+    animation: spinner-anim 1s infinite linear;
+  }
+}
+
+@-webkit-keyframes spinner-anim {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spinner-anim {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,11 +1,11 @@
 .background {
+  background: #00a8ff;
   bottom: 0;
   left: 0;
   position: fixed;
   right: 0;
   top: 0;
   transition: all 0.3s ease-in;
-  transition-delay: 0.3s;
   z-index: -999;
 
   &:after {
@@ -24,7 +24,7 @@
   }
 
   &--partly-cloudy {
-    background: #95a5a6;
+    background: #718093;
   }
 
   &--cloudy {
@@ -36,7 +36,15 @@
   }
 
   &--heavy-snow {
-    background: #aaa69d;
+    background: #2f3640;
+  }
+
+  &--light-rain {
+    background: #487eb0;
+  }
+
+  &--heavy-rain {
+    background: #192a56;
   }
 
   &--thunder {

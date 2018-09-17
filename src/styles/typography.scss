@@ -55,6 +55,10 @@ a {
   font-weight: 300;
 }
 
+.typo-extra-small {
+  font-size: 0.75rem;
+}
+
 .typo-emoji {
   @include font-size(h4);
 }

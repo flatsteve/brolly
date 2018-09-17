@@ -68,7 +68,7 @@ export default class Forecast extends PureComponent {
                 <p>
                   {currentTimeForecast.temperature_feel.value}
                   {currentTimeForecast.temperature_feel.unit}{" "}
-                  <small className="typo-light">(feels)</small>
+                  <small className="typo-light typo-extra-small">(feels)</small>
                 </p>
               </div>
             </div>
@@ -99,7 +99,7 @@ export default class Forecast extends PureComponent {
 
         <HourlyForecast
           forecasts={currentDayForecast.hourlyForecast}
-          updateCurrentTimeForecast={this.updateCurrentTimeForecast}
+          updateCurrentTimeForecast={this.props.updateCurrentTimeForecast}
         />
       </React.Fragment>
     );
@@ -109,13 +109,13 @@ export default class Forecast extends PureComponent {
     const { loading, currentTimeForecast, currentDayForecast } = this.props;
 
     return (
-      <div>
+      <React.Fragment>
         <GradientBackground
           type={currentTimeForecast ? currentTimeForecast.type.class : null}
         />
 
         {this.renderForecast(loading, currentTimeForecast, currentDayForecast)}
-      </div>
+      </React.Fragment>
     );
   }
 }

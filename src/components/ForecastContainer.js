@@ -74,6 +74,7 @@ class ForecastContainer extends Component {
         loading={loading}
         currentDayForecast={currentDayForecast}
         currentTimeForecast={currentTimeForecast}
+        updateCurrentTimeForecast={this.updateCurrentTimeForecast}
       />
     );
   }

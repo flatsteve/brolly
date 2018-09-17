@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { API_URL } from "./api";
 
 export const getGeoLocation = () => {
@@ -12,9 +13,19 @@ export const getGeoLocation = () => {
 };
 
 export const getClosestLocation = () => {
-  return getGeoLocation().then(({ coords: { latitude, longitude } }) => {
-    return axios.post(`${API_URL}/location/`, {
-      targetLocation: JSON.stringify({ latitude, longitude })
-    });
+  return new Promise((resolve, reject) => {
+    getGeoLocation()
+      .then(({ coords: { latitude, longitude } }) => {
+        axios
+          .post(`${API_URL}/location/`, {
+            targetLocation: JSON.stringify({ latitude, longitude })
+          })
+          .then(res => {
+            resolve(res);
+          });
+      })
+      .catch(error => {
+        reject(error);
+      });
   });
 };
