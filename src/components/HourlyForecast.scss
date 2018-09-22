@@ -10,15 +10,27 @@
   margin: 0 0.75rem;
 
   &__item {
-    margin-right: 1.25rem;
+    min-width: 5rem;
+    padding-right: 1.25rem;
+    position: relative;
     text-align: center;
+
+    &:after {
+      background-color: rgba($white, 0.5);
+      bottom: -0.5rem;
+      content: "";
+      display: block;
+      left: 0;
+      height: 1px;
+      position: absolute;
+      transition: all 0.3s ease-out;
+      transform: scaleX(0);
+      visibility: hidden;
+      width: calc(100% - 1.25rem);
+    }
 
     &:hover {
       cursor: pointer;
-    }
-
-    &:last-of-type {
-      margin-right: 0;
     }
 
     h5 {
@@ -32,11 +44,17 @@
 
     &--past {
       opacity: 0.5;
+      pointer-events: none;
     }
 
     &--current {
       small {
         font-weight: bold;
+      }
+
+      &:after {
+        transform: scaleX(1);
+        visibility: visible;
       }
     }
   }

@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { addHours, format } from "date-fns";
 
 import GradientBackground from "./GradientBackground";
 import HourlyForecast from "./HourlyForecast";
@@ -46,9 +47,12 @@ export default class Forecast extends PureComponent {
             <p className="precipitation__description">
               <span className="typo-light">
                 chance of rain <br />
-                in the next
-              </span>{" "}
-              <strong>3 hours</strong>
+                between{" "}
+                <strong>
+                  {format(currentTimeForecast.time, "h")} -{" "}
+                  {format(addHours(currentTimeForecast.time, 3), "ha")}
+                </strong>
+              </span>
             </p>
           </div>
 
@@ -98,7 +102,8 @@ export default class Forecast extends PureComponent {
         </div>
 
         <HourlyForecast
-          forecasts={currentDayForecast.hourlyForecast}
+          currentTimeForecast={currentTimeForecast}
+          hourlyForecasts={currentDayForecast.hourlyForecast}
           updateCurrentTimeForecast={this.props.updateCurrentTimeForecast}
         />
       </React.Fragment>

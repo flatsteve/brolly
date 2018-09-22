@@ -4,22 +4,22 @@ import { addHours, isBefore, isWithinRange, format } from "date-fns";
 import "./HourlyForecast.scss";
 
 const HourlyForecast = props => {
-  const { forecasts, updateCurrentTimeForecast } = props;
+  const {
+    hourlyForecasts,
+    currentTimeForecast,
+    updateCurrentTimeForecast
+  } = props;
 
   const getForecastClass = forecast => {
     const now = Date.now();
+    const selectedForecastTime = currentTimeForecast.time;
 
     // Rememebr forecast ends 3 ours after start
     if (isBefore(addHours(forecast.time, 3), now)) {
       return "hourly-forecast__item--past";
     }
 
-    // console.log("NOW", format(now, "DD MM ha"));
-    // console.log("FORECAST START", format(forecast.time, "DD MM ha"));
-    // console.log("FORECAST END", format(addHours(forecast.time, 3), "DD MM ha"));
-
-    // Return class for current time
-    if (isWithinRange(now, forecast.time, addHours(forecast.time, 3))) {
+    if (selectedForecastTime === forecast.time) {
       return "hourly-forecast__item--current";
     }
 
@@ -28,7 +28,7 @@ const HourlyForecast = props => {
 
   return (
     <div className="hourly-forecast">
-      {forecasts.map((forecast, index) => {
+      {hourlyForecasts.map((forecast, index) => {
         return (
           <div
             key={index}

@@ -2,15 +2,23 @@
 @import "../styles/responsive";
 
 .app {
+  bottom: 0;
+  display: flex;
+  left: 0;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 0 auto;
   max-width: $mobile-landscape;
   padding: 1.25rem 0;
+  position: fixed;
+  right: 0;
+  top: 0;
 }
 
 .logo {
   margin: 0.25rem auto 1.25rem;
   padding: 0 1.25rem;
-  width: 7rem;
+  width: 7.5rem;
 }
 
 .app-controls {
