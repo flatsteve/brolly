@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { addHours, format } from "date-fns";
 
+import Loading from "./common/Loading";
 import GradientBackground from "./GradientBackground";
 import HourlyForecast from "./HourlyForecast";
 import brollyIcon from "../icons/brolly.svg";
@@ -20,19 +21,7 @@ export default class Forecast extends PureComponent {
 
   renderForecast(loading, currentTimeForecast, currentDayForecast, location) {
     if (loading) {
-      return (
-        <div className="empty-container">
-          <div
-            className="brolly brolly--loading"
-            dangerouslySetInnerHTML={{ __html: brollyIcon }}
-          />
-
-          <p>
-            Loading forcast for {location.name}
-            ...
-          </p>
-        </div>
-      );
+      return <Loading locationName={location.name} />;
     }
 
     if (!currentTimeForecast) {
