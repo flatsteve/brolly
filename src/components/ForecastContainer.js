@@ -66,14 +66,16 @@ class ForecastContainer extends Component {
   };
 
   render() {
-    console.log("FORECAST RERENDERED");
     const { loading, currentTimeForecast, currentDayForecast } = this.state;
+
+    const { location } = this.props.store;
 
     return (
       <Forecast
         loading={loading}
         currentDayForecast={currentDayForecast}
         currentTimeForecast={currentTimeForecast}
+        location={location}
         updateCurrentTimeForecast={this.updateCurrentTimeForecast}
       />
     );

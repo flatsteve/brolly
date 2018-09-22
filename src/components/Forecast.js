@@ -18,11 +18,19 @@ export default class Forecast extends PureComponent {
     };
   };
 
-  renderForecast(loading, currentTimeForecast, currentDayForecast) {
+  renderForecast(loading, currentTimeForecast, currentDayForecast, location) {
     if (loading) {
       return (
         <div className="empty-container">
-          <p>Loading forcast...</p>
+          <div
+            className="brolly brolly--loading"
+            dangerouslySetInnerHTML={{ __html: brollyIcon }}
+          />
+
+          <p>
+            Loading forcast for {location.name}
+            ...
+          </p>
         </div>
       );
     }
@@ -36,82 +44,85 @@ export default class Forecast extends PureComponent {
     }
 
     return (
-      <React.Fragment>
-        <div className="forecast">
-          <div className="precipitation">
-            <h1 className="precipitation__title">
-              {currentTimeForecast.precipitation.value}
-              {currentTimeForecast.precipitation.unit}
-            </h1>
+      <div className="forecast">
+        <div className="precipitation">
+          <h1 className="precipitation__title">
+            {currentTimeForecast.precipitation.value}
+            {currentTimeForecast.precipitation.unit}
+          </h1>
 
-            <p className="precipitation__description">
-              <span className="typo-light">
-                chance of rain <br />
-                between{" "}
-                <strong>
-                  {format(currentTimeForecast.time, "h")} -{" "}
-                  {format(addHours(currentTimeForecast.time, 3), "ha")}
-                </strong>
-              </span>
-            </p>
-          </div>
+          <p className="precipitation__description">
+            <span className="typo-light">
+              chance of rain <br />
+              between{" "}
+              <strong>
+                {format(currentTimeForecast.time, "h")} -{" "}
+                {format(addHours(currentTimeForecast.time, 3), "ha")}
+              </strong>
+            </span>
+          </p>
+        </div>
 
-          <div className="main">
-            <div className="main__item temperature">
-              <div
-                className="temperature__icon"
-                dangerouslySetInnerHTML={{ __html: temperatureIcon }}
-              />
-
-              <div>
-                <p>
-                  {currentTimeForecast.temperature.value}
-                  {currentTimeForecast.temperature.unit}
-                </p>
-
-                <p>
-                  {currentTimeForecast.temperature_feel.value}
-                  {currentTimeForecast.temperature_feel.unit}{" "}
-                  <small className="typo-light typo-extra-small">(feels)</small>
-                </p>
-              </div>
-            </div>
-
+        <div className="main">
+          <div className="main__item temperature">
             <div
-              className="brolly"
-              style={this.getBrollyRotation(currentTimeForecast)}
-              dangerouslySetInnerHTML={{ __html: brollyIcon }}
+              className="temperature__icon"
+              dangerouslySetInnerHTML={{ __html: temperatureIcon }}
             />
 
-            <div className="main__item wind">
-              <div
-                className="wind__icon"
-                dangerouslySetInnerHTML={{ __html: windIcon }}
-              />
+            <div>
+              <p>
+                {currentTimeForecast.temperature.value}
+                {currentTimeForecast.temperature.unit}
+              </p>
 
               <p>
-                {currentTimeForecast.wind_speed.value}
-                <small className="typo-light">
-                  {currentTimeForecast.wind_speed.unit}
-                </small>
+                {currentTimeForecast.temperature_feel.value}
+                {currentTimeForecast.temperature_feel.unit}{" "}
+                <small className="typo-light typo-extra-small">(feels)</small>
               </p>
             </div>
           </div>
 
-          <h4 className="summary">{currentTimeForecast.type.description}</h4>
+          <div
+            className="brolly"
+            style={this.getBrollyRotation(currentTimeForecast)}
+            dangerouslySetInnerHTML={{ __html: brollyIcon }}
+          />
+
+          <div className="main__item wind">
+            <div
+              className="wind__icon"
+              dangerouslySetInnerHTML={{ __html: windIcon }}
+            />
+
+            <p>
+              {currentTimeForecast.wind_speed.value}
+              <small className="typo-light">
+                {currentTimeForecast.wind_speed.unit}
+              </small>
+            </p>
+          </div>
         </div>
+
+        <h4 className="summary">{currentTimeForecast.type.description}</h4>
 
         <HourlyForecast
           currentTimeForecast={currentTimeForecast}
           hourlyForecasts={currentDayForecast.hourlyForecast}
           updateCurrentTimeForecast={this.props.updateCurrentTimeForecast}
         />
-      </React.Fragment>
+      </div>
     );
   }
 
   render() {
-    const { loading, currentTimeForecast, currentDayForecast } = this.props;
+    const {
+      loading,
+      currentTimeForecast,
+      currentDayForecast,
+      location
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -119,7 +130,12 @@ export default class Forecast extends PureComponent {
           type={currentTimeForecast ? currentTimeForecast.type.class : null}
         />
 
-        {this.renderForecast(loading, currentTimeForecast, currentDayForecast)}
+        {this.renderForecast(
+          loading,
+          currentTimeForecast,
+          currentDayForecast,
+          location
+        )}
       </React.Fragment>
     );
   }

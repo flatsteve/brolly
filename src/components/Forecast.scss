@@ -1,12 +1,21 @@
 @import "../styles/colours";
 
 .empty-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
   padding: 0 1.25rem;
   text-align: center;
 }
 
 .forecast {
-  margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  margin-top: 2.5rem;
 }
 
 .precipitation {
@@ -45,6 +54,11 @@
   transition: all 0.3s ease-in;
   padding: 0 0.75rem;
   width: 33%;
+
+  &--loading {
+    animation: spin 2s linear infinite;
+    margin-bottom: 1.25rem;
+  }
 }
 
 .temperature {
@@ -71,4 +85,11 @@
 
 .summary {
   text-align: center;
+}
+
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
