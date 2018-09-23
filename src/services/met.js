@@ -107,3 +107,19 @@ export const getForecastForTime = (forecast, date) => {
 
   return forecastForTime;
 };
+
+export const getWindDirectionRotation = directionInwords => {
+  const DEGREE_INCREMENT = 11.25;
+  switch (directionInwords) {
+    case "N":
+      return 0;
+    case "NNE":
+      return DEGREE_INCREMENT;
+    case "NE":
+      return DEGREE_INCREMENT * 2;
+    case "ENE":
+      return DEGREE_INCREMENT * 3;
+    case "E":
+      return DEGREE_INCREMENT * 4;
+  }
+};

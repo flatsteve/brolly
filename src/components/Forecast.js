@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { addHours, format } from "date-fns";
+import { addHours, format, isToday, isTomorrow } from "date-fns";
 
 import Loading from "./common/Loading";
 import GradientBackground from "./GradientBackground";
@@ -12,12 +12,25 @@ import "./Forecast.scss";
 
 export default class Forecast extends PureComponent {
   getBrollyRotation = currentTimeForecast => {
+    const HALF_CIRCLE = 180;
     const { value } = currentTimeForecast.precipitation;
 
     return {
-      transform: `rotate(-${180 / (100 / value)}deg)`
+      transform: `rotate(-${HALF_CIRCLE / (100 / value)}deg)`
     };
   };
+
+  getDayOfForecast(date) {
+    if (isToday(date)) {
+      return "Today";
+    }
+
+    if (isTomorrow(date)) {
+      return "Tommorrow";
+    }
+
+    return `on ${format(date, "ddd")}`;
+  }
 
   renderForecast(loading, currentTimeForecast, currentDayForecast, location) {
     if (loading) {
@@ -42,12 +55,12 @@ export default class Forecast extends PureComponent {
 
           <p className="precipitation__description">
             <span className="typo-light">
-              chance of rain <br />
-              between{" "}
+              chance between <br />
               <strong>
                 {format(currentTimeForecast.time, "h")} -{" "}
                 {format(addHours(currentTimeForecast.time, 3), "ha")}
-              </strong>
+              </strong>{" "}
+              {this.getDayOfForecast(currentDayForecast.date)}
             </span>
           </p>
         </div>
@@ -66,8 +79,10 @@ export default class Forecast extends PureComponent {
               </p>
 
               <p>
-                {currentTimeForecast.temperature_feel.value}
-                {currentTimeForecast.temperature_feel.unit}{" "}
+                <span>
+                  {currentTimeForecast.temperature_feel.value}
+                  {currentTimeForecast.temperature_feel.unit}
+                </span>{" "}
                 <small className="typo-light typo-extra-small">(feels)</small>
               </p>
             </div>
