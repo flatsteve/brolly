@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { addHours, format, isToday, isTomorrow } from "date-fns";
 
+import { getWindDirectionRotation } from "../services/met";
 import Loading from "./common/Loading";
 import GradientBackground from "./GradientBackground";
 import HourlyForecast from "./HourlyForecast";
@@ -17,6 +18,15 @@ export default class Forecast extends PureComponent {
 
     return {
       transform: `rotate(-${HALF_CIRCLE / (100 / value)}deg)`
+    };
+  };
+
+  getWindRotation = currentTimeForecast => {
+    const { value } = currentTimeForecast.wind_direction;
+    const rotation = getWindDirectionRotation(value);
+
+    return {
+      transform: `rotate(${rotation}deg)`
     };
   };
 
@@ -97,13 +107,15 @@ export default class Forecast extends PureComponent {
           <div className="main__item wind">
             <div
               className="wind__icon"
+              style={this.getWindRotation(currentTimeForecast)}
               dangerouslySetInnerHTML={{ __html: windIcon }}
             />
 
             <p>
               {currentTimeForecast.wind_speed.value}
               <small className="typo-light">
-                {currentTimeForecast.wind_speed.unit}
+                {currentTimeForecast.wind_speed.unit},{" "}
+                {currentTimeForecast.wind_direction.value}
               </small>
             </p>
           </div>
