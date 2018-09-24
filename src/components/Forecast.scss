@@ -71,6 +71,11 @@
     margin-right: 0.75rem;
     width: 1rem;
   }
+
+  span {
+    display: inline-block;
+    min-width: 1.6rem;
+  }
 }
 
 .wind {
@@ -79,7 +84,9 @@
   flex-direction: column;
 
   &__icon {
-    width: 2rem;
+    transition: all 0.3s ease-in;
+    margin-bottom: 0.5rem;
+    width: 1.75rem;
   }
 }
 

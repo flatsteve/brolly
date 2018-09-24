@@ -107,3 +107,44 @@ export const getForecastForTime = (forecast, date) => {
 
   return forecastForTime;
 };
+
+export const getWindDirectionRotation = directionInwords => {
+  const DEGREE_INCREMENT = 22.5; // 360 / 16 point compass
+
+  switch (directionInwords) {
+    case "N":
+      return 0;
+    case "NNE":
+      return DEGREE_INCREMENT;
+    case "NE":
+      return DEGREE_INCREMENT * 2;
+    case "ENE":
+      return DEGREE_INCREMENT * 3;
+    case "E":
+      return DEGREE_INCREMENT * 4;
+    case "ESE":
+      return DEGREE_INCREMENT * 5;
+    case "SE":
+      return DEGREE_INCREMENT * 6;
+    case "SSE":
+      return DEGREE_INCREMENT * 7;
+    case "S":
+      return DEGREE_INCREMENT * 8;
+    case "SSW":
+      return DEGREE_INCREMENT * 9;
+    case "SW":
+      return DEGREE_INCREMENT * 10;
+    case "WSW":
+      return DEGREE_INCREMENT * 11;
+    case "W":
+      return DEGREE_INCREMENT * 12;
+    case "WNW":
+      return DEGREE_INCREMENT * 13;
+    case "NW":
+      return DEGREE_INCREMENT * 14;
+    case "NNW":
+      return DEGREE_INCREMENT * 15;
+    default:
+      return 0;
+  }
+};

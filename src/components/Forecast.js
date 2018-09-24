@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
-import { addHours, format } from "date-fns";
+import { addHours, format, isToday, isTomorrow } from "date-fns";
 
+import { getWindDirectionRotation } from "../services/met";
 import Loading from "./common/Loading";
 import GradientBackground from "./GradientBackground";
 import HourlyForecast from "./HourlyForecast";
@@ -12,12 +13,34 @@ import "./Forecast.scss";
 
 export default class Forecast extends PureComponent {
   getBrollyRotation = currentTimeForecast => {
+    const HALF_CIRCLE = 180;
     const { value } = currentTimeForecast.precipitation;
 
     return {
-      transform: `rotate(-${180 / (100 / value)}deg)`
+      transform: `rotate(-${HALF_CIRCLE / (100 / value)}deg)`
     };
   };
+
+  getWindRotation = currentTimeForecast => {
+    const { value } = currentTimeForecast.wind_direction;
+    const rotation = getWindDirectionRotation(value);
+
+    return {
+      transform: `rotate(${rotation}deg)`
+    };
+  };
+
+  getDayOfForecast(date) {
+    if (isToday(date)) {
+      return "Today";
+    }
+
+    if (isTomorrow(date)) {
+      return "Tommorrow";
+    }
+
+    return `on ${format(date, "ddd")}`;
+  }
 
   renderForecast(loading, currentTimeForecast, currentDayForecast, location) {
     if (loading) {
@@ -42,12 +65,12 @@ export default class Forecast extends PureComponent {
 
           <p className="precipitation__description">
             <span className="typo-light">
-              chance of rain <br />
-              between{" "}
+              chance between <br />
               <strong>
                 {format(currentTimeForecast.time, "h")} -{" "}
                 {format(addHours(currentTimeForecast.time, 3), "ha")}
-              </strong>
+              </strong>{" "}
+              {this.getDayOfForecast(currentDayForecast.date)}
             </span>
           </p>
         </div>
@@ -66,8 +89,11 @@ export default class Forecast extends PureComponent {
               </p>
 
               <p>
-                {currentTimeForecast.temperature_feel.value}
-                {currentTimeForecast.temperature_feel.unit}{" "}
+                <span>
+                  {currentTimeForecast.temperature_feel.value}
+                  {currentTimeForecast.temperature_feel.unit}
+                </span>
+                <br />
                 <small className="typo-light typo-extra-small">(feels)</small>
               </p>
             </div>
@@ -82,13 +108,15 @@ export default class Forecast extends PureComponent {
           <div className="main__item wind">
             <div
               className="wind__icon"
+              style={this.getWindRotation(currentTimeForecast)}
               dangerouslySetInnerHTML={{ __html: windIcon }}
             />
 
             <p>
               {currentTimeForecast.wind_speed.value}
               <small className="typo-light">
-                {currentTimeForecast.wind_speed.unit}
+                {currentTimeForecast.wind_speed.unit},{" "}
+                {currentTimeForecast.wind_direction.value}
               </small>
             </p>
           </div>
