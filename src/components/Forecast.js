@@ -92,7 +92,8 @@ export default class Forecast extends PureComponent {
                 <span>
                   {currentTimeForecast.temperature_feel.value}
                   {currentTimeForecast.temperature_feel.unit}
-                </span>{" "}
+                </span>
+                <br />
                 <small className="typo-light typo-extra-small">(feels)</small>
               </p>
             </div>
