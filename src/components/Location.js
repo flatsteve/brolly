@@ -9,7 +9,23 @@ import "./Location.scss";
 
 export class Location extends Component {
   state = {
-    loading: false
+    loading: false,
+    expanded: false,
+    search: ""
+  };
+
+  handleSearch = e => {
+    // Query API for locations starting with with what is typed
+
+    this.setState({
+      search: e.target.value
+    });
+  };
+
+  setExpanded = expanded => {
+    this.setState({
+      expanded
+    });
   };
 
   requestLocation = () => {
@@ -32,21 +48,40 @@ export class Location extends Component {
   };
 
   render() {
-    const { loading } = this.state;
+    const { loading, expanded, search } = this.state;
     const { location } = this.props.store;
 
     return (
-      <div className="location">
-        <input className="location-input" value={location.name} />
-
-        {loading ? (
-          <Spinner />
-        ) : (
-          <div
-            className="location-icon"
-            onClick={() => this.requestLocation()}
-            dangerouslySetInnerHTML={{ __html: locationIcon }}
+      <div
+        className={`location ${
+          expanded ? "location--expanded" : "locaton--colapsed"
+        }`}
+      >
+        <div className="location__control">
+          <input
+            className="location__control__input"
+            defaultValue={location.name}
+            onChange={this.handleSearch}
+            onClick={() => this.setExpanded(true)}
           />
+
+          {loading ? (
+            <Spinner />
+          ) : (
+            <div
+              className="location-icon"
+              onClick={() => this.requestLocation()}
+              dangerouslySetInnerHTML={{ __html: locationIcon }}
+            />
+          )}
+        </div>
+
+        {expanded && (
+          <div>
+            <div>{search}</div>
+
+            <button onClick={() => this.setExpanded(false)}>Close</button>
+          </div>
         )}
       </div>
     );

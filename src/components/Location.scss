@@ -1,20 +1,47 @@
 @import "../styles/colours";
 
 .location {
-  align-items: center;
-  display: flex;
   margin-right: 1.25rem;
   width: 50%;
+
+  &--expanded {
+    background-color: rgba(0, 0, 0, 0.75);
+    box-sizing: border-box;
+    bottom: 0;
+    display: flex;
+    left: 0;
+    flex-direction: column;
+    position: fixed;
+    right: 0;
+    padding: 1.25rem;
+    top: 0;
+    width: 100%;
+    transform: scale(1);
+    z-index: 99999;
+
+    .location__control__input {
+      background-color: rgba(0, 0, 0, 0.25);
+      border: 1px solid $white;
+      border-radius: 0.25rem;
+      margin-right: 0.75rem;
+      padding: 1.25rem;
+    }
+  }
 }
 
-.location-input {
-  background-color: transparent;
-  border: none;
-  color: $white;
-  width: 100%;
+.location__control {
+  align-items: center;
+  display: flex;
 
-  &:focus {
-    outline: none;
+  &__input {
+    background-color: transparent;
+    border: none;
+    color: $white;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
   }
 }
 
