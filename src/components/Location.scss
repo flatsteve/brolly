@@ -5,7 +5,7 @@
   width: 50%;
 
   &--expanded {
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.85);
     box-sizing: border-box;
     bottom: 0;
     display: flex;
@@ -24,7 +24,7 @@
       border: 1px solid $white;
       border-radius: 0.25rem;
       margin-right: 0.75rem;
-      padding: 1.25rem;
+      padding: 0.75rem 1.25rem;
     }
   }
 }
@@ -52,4 +52,8 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.location-results {
+  margin-top: 1.25rem;
 }

@@ -24,3 +24,10 @@ export const getLocation = (latitude, longitude) => {
     targetLocation: JSON.stringify({ latitude, longitude })
   });
 };
+
+export const searchLocations = searchTerm => {
+  // Debounce
+  return brollyAPI.post("/location/search/", {
+    searchTerm
+  });
+};

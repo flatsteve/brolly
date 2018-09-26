@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import { searchLocations } from "../services/api";
 import { getClosestLocation } from "../services/geolocation";
 import { withStore } from "../data/store";
 import locationIcon from "../icons/location.svg";
@@ -11,14 +12,22 @@ export class Location extends Component {
   state = {
     loading: false,
     expanded: false,
-    search: ""
+    search: "",
+    results: []
   };
 
   handleSearch = e => {
+    const search = e.target.value;
+
     // Query API for locations starting with with what is typed
+    searchLocations(search).then(res => {
+      this.setState({
+        results: res.data
+      });
+    });
 
     this.setState({
-      search: e.target.value
+      search
     });
   };
 
@@ -26,6 +35,11 @@ export class Location extends Component {
     this.setState({
       expanded
     });
+  };
+
+  setLocation = location => {
+    this.props.store.updateLocation(location);
+    this.setExpanded(false);
   };
 
   requestLocation = () => {
@@ -48,7 +62,7 @@ export class Location extends Component {
   };
 
   render() {
-    const { loading, expanded, search } = this.state;
+    const { loading, expanded, results } = this.state;
     const { location } = this.props.store;
 
     return (
@@ -78,7 +92,22 @@ export class Location extends Component {
 
         {expanded && (
           <div>
-            <div>{search}</div>
+            {results.length ? (
+              <div className="location-results">
+                {results.map(location => {
+                  return (
+                    <p
+                      key={location.id}
+                      onClick={() => this.setLocation(location)}
+                    >
+                      {location.name}
+                    </p>
+                  );
+                })}
+              </div>
+            ) : (
+              <p>No results found</p>
+            )}
 
             <button onClick={() => this.setExpanded(false)}>Close</button>
           </div>
