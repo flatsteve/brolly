@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { isSameDay } from "date-fns";
 
 import Forecast from "./Forecast";
+import { getWeatherForecast } from "../services/api";
 import {
-  getWeatherForecast,
   extract5DayForecast,
   getForecastForTime,
   getDailyForecasts
@@ -12,6 +12,7 @@ import { withStore } from "../data/store";
 
 class ForecastContainer extends Component {
   state = {
+    error: false,
     loading: true,
     currentDayForecast: null,
     currentTimeForecast: null
@@ -54,8 +55,8 @@ class ForecastContainer extends Component {
           loading: false
         });
       })
-      .catch(error => {
-        console.log(error);
+      .catch(({ response }) => {
+        this.setState({ error: response.data.error.message });
       });
   }
 
@@ -66,12 +67,18 @@ class ForecastContainer extends Component {
   };
 
   render() {
-    const { loading, currentTimeForecast, currentDayForecast } = this.state;
+    const {
+      error,
+      loading,
+      currentTimeForecast,
+      currentDayForecast
+    } = this.state;
 
     const { location } = this.props.store;
 
     return (
       <Forecast
+        error={error}
         loading={loading}
         currentDayForecast={currentDayForecast}
         currentTimeForecast={currentTimeForecast}

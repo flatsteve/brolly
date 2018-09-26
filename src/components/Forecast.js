@@ -42,7 +42,17 @@ export default class Forecast extends PureComponent {
     return `on ${format(date, "ddd")}`;
   }
 
-  renderForecast(loading, currentTimeForecast, currentDayForecast, location) {
+  renderForecast(
+    error,
+    loading,
+    currentTimeForecast,
+    currentDayForecast,
+    location
+  ) {
+    if (error) {
+      return <p>Something went wrong: {error}</p>;
+    }
+
     if (loading) {
       return <Loading locationName={location.name} />;
     }
@@ -135,6 +145,7 @@ export default class Forecast extends PureComponent {
 
   render() {
     const {
+      error,
       loading,
       currentTimeForecast,
       currentDayForecast,
@@ -148,6 +159,7 @@ export default class Forecast extends PureComponent {
         />
 
         {this.renderForecast(
+          error,
           loading,
           currentTimeForecast,
           currentDayForecast,
