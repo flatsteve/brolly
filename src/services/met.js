@@ -1,7 +1,5 @@
-import axios from "axios";
 import get from "lodash-es/get";
 import { addMinutes, isSameDay, isBefore } from "date-fns";
-import { API_URL } from "./api";
 
 const WEATHER_TYPES = {
   0: { class: "clear-night", description: "Clear night" },
@@ -34,12 +32,6 @@ const WEATHER_TYPES = {
   28: { class: "thunder", description: "Thunder shower (night)" },
   29: { class: "thunder", description: "Thunder shower (day)" },
   30: { class: "thunder", description: "Thunder" }
-};
-
-export const getWeatherForecast = locationID => {
-  return axios.post(`${API_URL}/forecast/`, {
-    locationID
-  });
 };
 
 export const extract5DayForecast = rawdata => {
