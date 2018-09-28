@@ -1,20 +1,78 @@
 @import "../styles/colours";
 
 .location {
-  align-items: center;
-  display: flex;
   margin-right: 1.25rem;
   width: 50%;
+
+  &--expanded {
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.85);
+    box-sizing: border-box;
+    bottom: 0;
+    display: flex;
+    left: 0;
+    flex-direction: column;
+    position: fixed;
+    right: 0;
+    padding: 1.25rem;
+    top: 0;
+    width: 100%;
+    z-index: 99999;
+
+    .location__control__extra {
+      display: flex;
+      justify-content: center;
+      width: 2rem;
+    }
+
+    .location__control__input {
+      background-color: rgba(0, 0, 0, 0.25);
+      border: 1px solid $white;
+      border-radius: 0.25rem;
+      margin-right: 0.75rem;
+      padding: 0.75rem;
+    }
+  }
 }
 
-.location-input {
-  background-color: transparent;
-  border: none;
-  color: $white;
+.location__container {
+  max-width: 32rem;
   width: 100%;
+}
 
-  &:focus {
-    outline: none;
+.location__header {
+  align-items: center;
+  display: flex;
+  margin-bottom: 1.75rem;
+}
+
+.location__title {
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.location__close {
+  margin-left: auto;
+  width: 1rem;
+}
+
+.location__control {
+  align-items: center;
+  display: flex;
+
+  &__input {
+    background-color: transparent;
+    border: none;
+    color: $white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
   }
 }
 
@@ -25,4 +83,23 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.location-results {
+  margin-top: 1.25rem;
+
+  p {
+    border-bottom: 1px solid #2c3e50;
+    margin: 0;
+    padding: 0.75rem 0;
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}
+
+.location-results-empty {
+  margin-top: 1.25rem;
+  text-align: center;
 }
