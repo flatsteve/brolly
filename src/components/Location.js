@@ -109,59 +109,63 @@ export class Location extends Component {
           expanded ? "location--expanded" : "locaton--colapsed"
         }`}
       >
-        {expanded && (
-          <div className="location__header">
-            <h4 className="location__title">Choose your location</h4>
+        <div className="location__container">
+          {expanded && (
+            <div className="location__header">
+              <h4 className="location__title">Set your location</h4>
 
-            <div
-              onClick={this.close}
-              className="location__close"
-              dangerouslySetInnerHTML={{ __html: closeIcon }}
-            />
-          </div>
-        )}
-
-        <div className="location__control">
-          <input
-            className="location__control__input"
-            value={search}
-            onChange={this.handleSearch.bind(this)}
-            onClick={() => this.setExpanded(true)}
-          />
-
-          <div className="location__control__extra">
-            {loading ? (
-              <Spinner />
-            ) : (
               <div
-                className="location-icon"
-                onClick={() => this.requestLocation()}
-                dangerouslySetInnerHTML={{ __html: locationIcon }}
+                onClick={this.close}
+                className="location__close"
+                dangerouslySetInnerHTML={{ __html: closeIcon }}
               />
-            )}
-          </div>
-        </div>
+            </div>
+          )}
 
-        {expanded && (
-          <div>
-            {results.length ? (
-              <div className="location-results">
-                {results.map(location => {
-                  return (
-                    <p
-                      key={location.id}
-                      onClick={() => this.setLocation(location)}
-                    >
-                      {location.name}
-                    </p>
-                  );
-                })}
-              </div>
-            ) : (
-              <p>No results found</p>
-            )}
+          <div className="location__control">
+            <input
+              className="location__control__input"
+              value={search}
+              onChange={this.handleSearch.bind(this)}
+              onClick={() => this.setExpanded(true)}
+            />
+
+            <div className="location__control__extra">
+              {loading ? (
+                <Spinner />
+              ) : (
+                <div
+                  className="location-icon"
+                  onClick={() => this.requestLocation()}
+                  dangerouslySetInnerHTML={{ __html: locationIcon }}
+                />
+              )}
+            </div>
           </div>
-        )}
+
+          {expanded && (
+            <div>
+              {results.length ? (
+                <div className="location-results">
+                  {results.map(location => {
+                    return (
+                      <p
+                        key={location.id}
+                        onClick={() => this.setLocation(location)}
+                      >
+                        {location.name}
+                      </p>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="location-results-empty">
+                  No results found, try searching for a differnet location...
+                </p>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     );
   }

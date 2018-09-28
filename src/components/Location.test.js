@@ -10,10 +10,16 @@ const mockStore = {
 };
 
 describe("<Location />", () => {
-  it("renders the location name in an input", () => {
-    const wrapper = shallow(<Location store={mockStore} />);
-    const input = wrapper.find(".location-input");
+  const wrapper = shallow(<Location store={mockStore} />);
+  const input = wrapper.find(".location__control__input");
 
+  it("renders the location name in an input", () => {
     expect(input.props().value).toEqual("Glasgow");
+  });
+
+  it("expands to allow searching for locations", () => {
+    input.simulate("click");
+
+    expect(wrapper.find(".location__title").text()).toBe("Set your location");
   });
 });
