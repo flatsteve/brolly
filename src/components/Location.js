@@ -1,40 +1,66 @@
 import React, { Component } from "react";
+import debounce from "lodash-es/debounce";
 
 import { searchLocations } from "../services/api";
 import { getClosestLocation } from "../services/geolocation";
 import { withStore } from "../data/store";
 import locationIcon from "../icons/location.svg";
 import Spinner from "./common/Spinner";
+import closeIcon from "../icons/close.svg";
 
 import "./Location.scss";
 
 export class Location extends Component {
+  constructor(props) {
+    super(props);
+
+    this.queryLocations = debounce(this.queryLocations, 500);
+  }
+
   state = {
     loading: false,
     expanded: false,
-    search: "",
+    search: this.props.store.location.name || "",
     results: []
+  };
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.store.location.id !== this.props.store.location.id) {
+      this.setState({
+        search: this.props.store.location.name
+      });
+    }
+  }
+
+  queryLocations = search => {
+    this.setState({
+      loading: true
+    });
+
+    searchLocations(search)
+      .then(res => {
+        this.setState({
+          results: res.data
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      })
+      .finally(() => {
+        this.setState({
+          loading: false
+        });
+      });
   };
 
   handleSearch = e => {
     const search = e.target.value;
 
-    // Query API for locations starting with with what is typed
-    searchLocations(search).then(res => {
-      this.setState({
-        results: res.data
-      });
-    });
-
     this.setState({
       search
     });
-  };
 
-  setExpanded = expanded => {
-    this.setState({
-      expanded
-    });
+    this.queryLocations(search);
   };
 
   setLocation = location => {
@@ -61,9 +87,21 @@ export class Location extends Component {
       });
   };
 
+  setExpanded = expanded => {
+    this.setState({
+      expanded
+    });
+  };
+
+  close = () => {
+    this.setState({
+      expanded: false,
+      search: this.props.store.location.name
+    });
+  };
+
   render() {
-    const { loading, expanded, results } = this.state;
-    const { location } = this.props.store;
+    const { loading, expanded, results, search } = this.state;
 
     return (
       <div
@@ -71,23 +109,37 @@ export class Location extends Component {
           expanded ? "location--expanded" : "locaton--colapsed"
         }`}
       >
+        {expanded && (
+          <div className="location__header">
+            <h4 className="location__title">Choose your location</h4>
+
+            <div
+              onClick={this.close}
+              className="location__close"
+              dangerouslySetInnerHTML={{ __html: closeIcon }}
+            />
+          </div>
+        )}
+
         <div className="location__control">
           <input
             className="location__control__input"
-            defaultValue={location.name}
-            onChange={this.handleSearch}
+            value={search}
+            onChange={this.handleSearch.bind(this)}
             onClick={() => this.setExpanded(true)}
           />
 
-          {loading ? (
-            <Spinner />
-          ) : (
-            <div
-              className="location-icon"
-              onClick={() => this.requestLocation()}
-              dangerouslySetInnerHTML={{ __html: locationIcon }}
-            />
-          )}
+          <div className="location__control__extra">
+            {loading ? (
+              <Spinner />
+            ) : (
+              <div
+                className="location-icon"
+                onClick={() => this.requestLocation()}
+                dangerouslySetInnerHTML={{ __html: locationIcon }}
+              />
+            )}
+          </div>
         </div>
 
         {expanded && (
@@ -108,8 +160,6 @@ export class Location extends Component {
             ) : (
               <p>No results found</p>
             )}
-
-            <button onClick={() => this.setExpanded(false)}>Close</button>
           </div>
         )}
       </div>

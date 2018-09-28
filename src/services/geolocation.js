@@ -6,7 +6,7 @@ export const getGeoLocation = () => {
       return reject("Geolocation not supported");
     }
 
-    navigator.geolocation.getCurrentPosition(resolve, reject);
+    return navigator.geolocation.getCurrentPosition(resolve, reject);
   });
 };
 
