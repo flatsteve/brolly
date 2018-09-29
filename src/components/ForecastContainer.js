@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { isSameDay } from "date-fns";
 
-import Forecast from "./Forecast";
+import { withStore } from "../data/store";
 import { getWeatherForecast } from "../services/api";
 import {
   extract5DayForecast,
   getForecastForTime,
   getDailyForecasts
 } from "../services/met";
-import { withStore } from "../data/store";
+import Forecast from "./Forecast";
 
 class ForecastContainer extends Component {
   state = {
@@ -23,12 +23,23 @@ class ForecastContainer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // Only update if the date or location changed
-    if (
-      prevProps.store.location.id !== this.props.store.location.id ||
-      !isSameDay(prevProps.store.date, this.props.store.date)
-    ) {
+    // If the location changed fetch a new forecast
+    if (prevProps.store.location.id !== this.props.store.location.id) {
       this.getForecast();
+    }
+
+    // if the date changed update the current day/time forecast to date within 5 day forecast
+    if (!isSameDay(prevProps.store.date, this.props.store.date)) {
+      this.setState({
+        currentDayForecast: getDailyForecasts(
+          this.props.store.forecast,
+          this.props.store.date
+        ),
+        currentTimeForecast: getForecastForTime(
+          this.props.store.forecast,
+          this.props.store.date
+        )
+      });
     }
   }
 
@@ -44,6 +55,8 @@ class ForecastContainer extends Component {
       });
     }
 
+    this.setState({ loading: true });
+
     getWeatherForecast(location.id)
       .then(res => {
         const forecast = extract5DayForecast(res);
@@ -51,12 +64,14 @@ class ForecastContainer extends Component {
 
         this.setState({
           currentDayForecast: getDailyForecasts(forecast, date),
-          currentTimeForecast: getForecastForTime(forecast, date),
-          loading: false
+          currentTimeForecast: getForecastForTime(forecast, date)
         });
       })
       .catch(({ response }) => {
         this.setState({ error: response.data.error.message });
+      })
+      .finally(() => {
+        this.setState({ loading: false });
       });
   }
 

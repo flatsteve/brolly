@@ -2,13 +2,13 @@ import React, { Component, createContext } from "react";
 import { getItem, setItem } from "../services/storage";
 
 const INITIAL_LOCATION = {
-  elevation: "4.0",
-  id: "99015",
-  latitude: "54.067",
-  longitude: "-6.183",
-  name: "Killowen",
-  region: "ni",
-  unitaryAuthArea: "County Down"
+  elevation: "10.0",
+  id: "350928",
+  latitude: "51.5102",
+  longitude: "-0.0837",
+  name: "City Of London",
+  region: "se",
+  unitaryAuthArea: "Greater London"
 };
 
 const store = createContext({ location: INITIAL_LOCATION });
@@ -18,8 +18,10 @@ export class AppProvider extends Component {
   state = {
     date: new Date(),
     updateDate: date => this.setState({ date }),
+
     location: getItem("location") || INITIAL_LOCATION,
     updateLocation: location => this.setState({ location }),
+
     forecast: getItem("forecast") || null,
     updateForecast: forecast => this.setState({ forecast })
   };
@@ -39,7 +41,7 @@ export class AppProvider extends Component {
   };
 
   render() {
-    console.log("STORE", this.state);
+    console.log("STORE STATE", this.state);
 
     return <Provider value={this.state}>{this.props.children}</Provider>;
   }
