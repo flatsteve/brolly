@@ -30,30 +30,16 @@ class ForecastContainer extends Component {
 
     // if the date changed update the current day/time forecast to date within 5 day forecast
     if (!isSameDay(prevProps.store.date, this.props.store.date)) {
-      this.setState({
-        currentDayForecast: getDailyForecasts(
-          this.props.store.forecast,
-          this.props.store.date
-        ),
-        currentTimeForecast: getForecastForTime(
-          this.props.store.forecast,
-          this.props.store.date
-        )
-      });
+      this.updateCurrentDayForecast(
+        this.props.store.forecast,
+        this.props.store.date,
+        this.state.currentTimeForecast
+      );
     }
   }
 
   getForecast() {
-    const { date, location, updateForecast, forecast } = this.props.store;
-
-    // FOR DEV TESTING ONLY - DONT REFRESH FORECAST EVERY TIME
-    if (window.location.hostname === "localhost" && forecast) {
-      return this.setState({
-        currentDayForecast: getDailyForecasts(forecast, date),
-        currentTimeForecast: getForecastForTime(forecast, date),
-        loading: false
-      });
-    }
+    const { date, location, updateForecast } = this.props.store;
 
     this.setState({ loading: true });
 
@@ -62,10 +48,7 @@ class ForecastContainer extends Component {
         const forecast = extract5DayForecast(res);
         updateForecast(forecast);
 
-        this.setState({
-          currentDayForecast: getDailyForecasts(forecast, date),
-          currentTimeForecast: getForecastForTime(forecast, date)
-        });
+        this.updateCurrentDayForecast(forecast, date);
       })
       .catch(({ response }) => {
         this.setState({ error: response.data.error.message });
@@ -74,6 +57,17 @@ class ForecastContainer extends Component {
         this.setState({ loading: false });
       });
   }
+
+  updateCurrentDayForecast = (forecast, date, currentTimeForecast) => {
+    this.setState({
+      currentDayForecast: getDailyForecasts(forecast, date),
+      currentTimeForecast: getForecastForTime(
+        forecast,
+        date,
+        currentTimeForecast
+      )
+    });
+  };
 
   updateCurrentTimeForecast = forecast => {
     this.setState({

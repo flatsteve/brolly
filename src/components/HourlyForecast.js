@@ -1,18 +1,27 @@
-import React from "react";
-import { addHours, isBefore, isWithinRange, format } from "date-fns";
+import React, { Component } from "react";
+import { addHours, isBefore, format } from "date-fns";
 
 import "./HourlyForecast.scss";
 
-const HourlyForecast = props => {
-  const {
-    hourlyForecasts,
-    currentTimeForecast,
-    updateCurrentTimeForecast
-  } = props;
+export default class HourlyForecast extends Component {
+  constructor(props) {
+    super(props);
 
-  const getForecastClass = forecast => {
+    this.hoursContainer = React.createRef();
+  }
+
+  componentDidUpdate() {
+    const conatinerEl = this.hoursContainer.current;
+    const currentHourEl = conatinerEl.getElementsByClassName(
+      "hourly-forecast__item--current"
+    )[0];
+
+    currentHourEl.scrollIntoView({ behavior: "smooth", inline: "center" });
+  }
+
+  getForecastClass = forecast => {
     const now = Date.now();
-    const selectedForecastTime = currentTimeForecast.time;
+    const selectedForecastTime = this.props.currentTimeForecast.time;
 
     // Rememebr forecast ends 3 ours after start
     if (isBefore(addHours(forecast.time, 3), now)) {
@@ -26,31 +35,35 @@ const HourlyForecast = props => {
     return "";
   };
 
-  return (
-    <div className="hourly-forecast">
-      {hourlyForecasts.map((forecast, index) => {
-        return (
-          <div
-            key={index}
-            className={`hourly-forecast__item ${getForecastClass(forecast)}`}
-            onClick={() => updateCurrentTimeForecast(forecast)}
-          >
-            <h5>
-              {forecast.precipitation.value}
-              {forecast.precipitation.unit}
-            </h5>
+  render() {
+    const { hourlyForecasts, updateCurrentTimeForecast } = this.props;
 
-            <p>
-              <small className="typo-light">
-                {format(forecast.time, "ha")} -{" "}
-                {format(addHours(forecast.time, 3), "ha")}
-              </small>
-            </p>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+    return (
+      <div className="hourly-forecast" ref={this.hoursContainer}>
+        {hourlyForecasts.map((forecast, index) => {
+          return (
+            <div
+              key={index}
+              className={`hourly-forecast__item ${this.getForecastClass(
+                forecast
+              )}`}
+              onClick={() => updateCurrentTimeForecast(forecast)}
+            >
+              <h5>
+                {forecast.precipitation.value}
+                {forecast.precipitation.unit}
+              </h5>
 
-export default HourlyForecast;
+              <p>
+                <small className="typo-light">
+                  {format(forecast.time, "ha")} -{" "}
+                  {format(addHours(forecast.time, 3), "ha")}
+                </small>
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+}

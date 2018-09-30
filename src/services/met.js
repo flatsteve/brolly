@@ -1,5 +1,5 @@
 import get from "lodash-es/get";
-import { addMinutes, isSameDay, isBefore } from "date-fns";
+import { addMinutes, getHours, isSameDay, isBefore } from "date-fns";
 
 const WEATHER_TYPES = {
   0: { class: "clear-night", description: "Clear night" },
@@ -32,6 +32,47 @@ const WEATHER_TYPES = {
   28: { class: "thunder", description: "Thunder shower (night)" },
   29: { class: "thunder", description: "Thunder shower (day)" },
   30: { class: "thunder", description: "Thunder" }
+};
+
+export const getWindDirectionRotation = directionInwords => {
+  const DEGREE_INCREMENT = 22.5; // 360 / 16 point compass
+
+  switch (directionInwords) {
+    case "N":
+      return 0;
+    case "NNE":
+      return DEGREE_INCREMENT;
+    case "NE":
+      return DEGREE_INCREMENT * 2;
+    case "ENE":
+      return DEGREE_INCREMENT * 3;
+    case "E":
+      return DEGREE_INCREMENT * 4;
+    case "ESE":
+      return DEGREE_INCREMENT * 5;
+    case "SE":
+      return DEGREE_INCREMENT * 6;
+    case "SSE":
+      return DEGREE_INCREMENT * 7;
+    case "S":
+      return DEGREE_INCREMENT * 8;
+    case "SSW":
+      return DEGREE_INCREMENT * 9;
+    case "SW":
+      return DEGREE_INCREMENT * 10;
+    case "WSW":
+      return DEGREE_INCREMENT * 11;
+    case "W":
+      return DEGREE_INCREMENT * 12;
+    case "WNW":
+      return DEGREE_INCREMENT * 13;
+    case "NW":
+      return DEGREE_INCREMENT * 14;
+    case "NNW":
+      return DEGREE_INCREMENT * 15;
+    default:
+      return 0;
+  }
 };
 
 export const extract5DayForecast = rawdata => {
@@ -77,7 +118,7 @@ export const getDailyForecasts = (forecast, date) => {
   return daysForecast;
 };
 
-export const getForecastForTime = (forecast, date) => {
+export const getForecastForTime = (forecast, date, currentTimeForecast = 9) => {
   if (!forecast) {
     return;
   }
@@ -91,52 +132,15 @@ export const getForecastForTime = (forecast, date) => {
       return isBefore(curr.time, date) ? curr : prev;
     });
   } else {
-    // If not show the first time we have for that day
-    forecastForTime = daysForecast.hourlyForecast[0];
+    // If not today then use the time of the currently viewed forecast
+    forecastForTime = daysForecast.hourlyForecast.find(hoursForecast => {
+      return (
+        getHours(hoursForecast.time) === getHours(currentTimeForecast.time)
+      );
+    });
   }
 
   console.log("CURRENT FORECAST FOR HOUR", forecastForTime);
 
   return forecastForTime;
-};
-
-export const getWindDirectionRotation = directionInwords => {
-  const DEGREE_INCREMENT = 22.5; // 360 / 16 point compass
-
-  switch (directionInwords) {
-    case "N":
-      return 0;
-    case "NNE":
-      return DEGREE_INCREMENT;
-    case "NE":
-      return DEGREE_INCREMENT * 2;
-    case "ENE":
-      return DEGREE_INCREMENT * 3;
-    case "E":
-      return DEGREE_INCREMENT * 4;
-    case "ESE":
-      return DEGREE_INCREMENT * 5;
-    case "SE":
-      return DEGREE_INCREMENT * 6;
-    case "SSE":
-      return DEGREE_INCREMENT * 7;
-    case "S":
-      return DEGREE_INCREMENT * 8;
-    case "SSW":
-      return DEGREE_INCREMENT * 9;
-    case "SW":
-      return DEGREE_INCREMENT * 10;
-    case "WSW":
-      return DEGREE_INCREMENT * 11;
-    case "W":
-      return DEGREE_INCREMENT * 12;
-    case "WNW":
-      return DEGREE_INCREMENT * 13;
-    case "NW":
-      return DEGREE_INCREMENT * 14;
-    case "NNW":
-      return DEGREE_INCREMENT * 15;
-    default:
-      return 0;
-  }
 };
