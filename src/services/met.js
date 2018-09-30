@@ -118,7 +118,11 @@ export const getDailyForecasts = (forecast, date) => {
   return daysForecast;
 };
 
-export const getForecastForTime = (forecast, date, currentTimeForecast = 9) => {
+export const getForecastForTime = (
+  forecast,
+  date,
+  currentTimeForecast = { time: new Date(2000, 1, 1, 9) } // Default to 9am - date doesn't matter
+) => {
   if (!forecast) {
     return;
   }
