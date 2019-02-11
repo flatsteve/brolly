@@ -106,7 +106,7 @@ export class Location extends Component {
     return (
       <div
         className={`location ${
-          expanded ? "location--expanded" : "locaton--colapsed"
+          expanded ? "location--expanded" : "location--collapsed"
         }`}
       >
         <div className="location__container">
@@ -160,7 +160,7 @@ export class Location extends Component {
                 </div>
               ) : (
                 <p className="location-results-empty">
-                  No results found, try searching for a differnet location...
+                  No results found, try searching for a different location...
                 </p>
               )}
             </div>
