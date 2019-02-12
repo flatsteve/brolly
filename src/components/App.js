@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 
 import { AppProvider } from "../data/store";
 
@@ -32,5 +31,3 @@ export default class App extends Component {
     );
   }
 }
-
-ReactDOM.render(<App />, document.getElementById("app"));

@@ -134,7 +134,9 @@ export default class Forecast extends PureComponent {
           </div>
         </div>
 
-        <h4 className="summary">{currentTimeForecast.type.description}</h4>
+        <h4 className="summary" data-testid="forecast-summary-text">
+          {currentTimeForecast.type.description}
+        </h4>
 
         <HourlyForecast
           currentTimeForecast={currentTimeForecast}

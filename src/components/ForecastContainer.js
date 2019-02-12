@@ -49,12 +49,14 @@ class ForecastContainer extends Component {
         updateForecast(forecast);
 
         this.updateCurrentDayForecast(forecast, date);
+
+        this.setState({ loading: false });
       })
       .catch(({ response }) => {
-        this.setState({ error: response.data.error.message });
-      })
-      .finally(() => {
-        this.setState({ loading: false });
+        this.setState({
+          error: response.data.error.message,
+          loading: false
+        });
       });
   }
 
