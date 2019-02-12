@@ -50,7 +50,9 @@ export default class Forecast extends PureComponent {
     location
   ) {
     if (error) {
-      return <p>Something went wrong: {error}</p>;
+      return (
+        <p data-testid="forecast-error-text">Something went wrong: {error}</p>
+      );
     }
 
     if (loading) {
@@ -60,7 +62,7 @@ export default class Forecast extends PureComponent {
     if (!currentTimeForecast) {
       return (
         <div className="empty-container">
-          <p data-testid="no-forecast-text">
+          <p data-testid="forecast-empty-text">
             No forecast available. Try refreshing.
           </p>
         </div>

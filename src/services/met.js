@@ -114,7 +114,6 @@ export const getDailyForecasts = (forecast, date) => {
     return isSameDay(dailyForecast.date, date);
   });
 
-  console.log("THE FORECAST FOR THE DAY", daysForecast);
   return daysForecast;
 };
 
@@ -143,8 +142,6 @@ export const getForecastForTime = (
       );
     });
   }
-
-  console.log("CURRENT FORECAST FOR HOUR", forecastForTime);
 
   return forecastForTime;
 };

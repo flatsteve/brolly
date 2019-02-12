@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { isSameDay } from "date-fns";
+import { get } from "lodash";
 
 import { withStore } from "../data/store";
 import { getWeatherForecast } from "../services/api";
@@ -52,9 +53,9 @@ class ForecastContainer extends Component {
 
         this.setState({ loading: false });
       })
-      .catch(({ response }) => {
+      .catch(error => {
         this.setState({
-          error: response.data.error.message,
+          error: get(error, "response.data.error.message", "try refreshing"),
           loading: false
         });
       });

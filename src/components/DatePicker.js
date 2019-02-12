@@ -39,6 +39,7 @@ class DatePicker extends Component {
     return (
       <div className="date-picker">
         <div
+          data-testid="date-previous-button"
           onClick={() => this.setDate("decrement")}
           className={`date-picker__icon date-picker__icon--back ${this.isDisabled(
             "decrement"
@@ -49,6 +50,7 @@ class DatePicker extends Component {
         <p className="date-picker__date">{format(date, "ddd, Do MMM")}</p>
 
         <div
+          data-testid="date-next-button"
           onClick={this.setDate}
           className={`date-picker__icon ${this.isDisabled() &&
             "date-picker__icon--disabled"}`}

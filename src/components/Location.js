@@ -124,6 +124,7 @@ export class Location extends Component {
 
           <div className="location__control">
             <input
+              data-testid="location-input"
               className="location__control__input"
               value={search}
               onChange={this.handleSearch.bind(this)}
