@@ -8,6 +8,7 @@ Really just an excuse to learn some new React APIs and mess around.
 
 - Install deps: `yarn`
 - Run app locally: `yarn start`
+- Run tests: `yarn test` or `yarn test-tdd`
 
 ### Deployment
 

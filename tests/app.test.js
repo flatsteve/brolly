@@ -5,7 +5,7 @@ import Forecast from "../src/components/Forecast";
 
 afterEach(cleanup);
 
-test("loads and displays no forecast message", async () => {
+it("Loads and displays no forecast message", async () => {
   const { getByTestId } = render(<Forecast />);
 
   expect(getByTestId("no-forecast-text")).toHaveTextContent("No forecast");
