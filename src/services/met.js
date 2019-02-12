@@ -1,4 +1,4 @@
-import get from "lodash-es/get";
+import { get } from "lodash";
 import { addMinutes, getHours, isSameDay, isBefore } from "date-fns";
 
 const WEATHER_TYPES = {

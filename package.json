@@ -36,12 +36,13 @@
     "build": "webpack --mode production",
     "test": "jest",
     "test-tdd": "jest --watch",
+    "test-clear": "jest --clearCache",
     "stats": "webpack --json | webpack-bundle-size-analyzer"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "date-fns": "^1.30.1",
-    "lodash-es": "^4.17.11",
+    "lodash": "^4.17.11",
     "normalize.css": "^8.0.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1"

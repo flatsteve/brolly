@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import debounce from "lodash-es/debounce";
+import { debounce } from "lodash";
 
 import { searchLocations } from "../services/api";
 import { getClosestLocation } from "../services/geolocation";

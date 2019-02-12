@@ -60,7 +60,9 @@ export default class Forecast extends PureComponent {
     if (!currentTimeForecast) {
       return (
         <div className="empty-container">
-          <p>No forecast available. Try refreshing.</p>
+          <p data-testid="no-forecast-text">
+            No forecast available. Try refreshing.
+          </p>
         </div>
       );
     }
