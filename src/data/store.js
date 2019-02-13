@@ -41,6 +41,7 @@ export class AppProvider extends Component {
   };
 
   render() {
+    console.log("STORE STATE", this.state);
     return <Provider value={this.state}>{this.props.children}</Provider>;
   }
 }

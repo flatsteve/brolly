@@ -10,14 +10,15 @@ import "jest-dom/extend-expect";
 import { getWeatherForecast } from "../src/services/api";
 import { forecast } from "./fixtures/sampleData";
 import App from "../src/components/App";
+import MockDate from "mockdate";
 
 jest.mock("../src/services/api");
 beforeAll(() => {
+  MockDate.set("2019-02-13T12:00:00");
   window.HTMLElement.prototype.scrollIntoView = jest.fn();
 });
 afterEach(cleanup);
 
-// 2019-02-13T15:00:00.000Z
 describe("Basic app states", () => {
   it("Shows an error when there is a problem getting the forecast", async () => {
     getWeatherForecast.mockImplementationOnce(() => Promise.reject());
@@ -53,13 +54,11 @@ describe("Basic app states", () => {
     expect(getByTestId("forecast-summary-text")).toHaveTextContent("Cloudy");
 
     fireEvent.click(getByTestId("date-next-button"));
-
     expect(getByTestId("forecast-summary-text")).toHaveTextContent(
       "Partly cloudy"
     );
 
     fireEvent.click(getByTestId("date-next-button"));
-
     expect(getByTestId("forecast-summary-text")).toHaveTextContent("Sunny day");
   });
 });
