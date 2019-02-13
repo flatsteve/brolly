@@ -14,7 +14,7 @@ import MockDate from "mockdate";
 
 jest.mock("../src/services/api");
 beforeAll(() => {
-  MockDate.set("2019-02-13T12:00:00");
+  MockDate.set("2019-02-13T10:00:00");
   window.HTMLElement.prototype.scrollIntoView = jest.fn();
 });
 afterEach(cleanup);
@@ -57,8 +57,5 @@ describe("Basic app states", () => {
     expect(getByTestId("forecast-summary-text")).toHaveTextContent(
       "Partly cloudy"
     );
-
-    fireEvent.click(getByTestId("date-next-button"));
-    expect(getByTestId("forecast-summary-text")).toHaveTextContent("Sunny day");
   });
 });
