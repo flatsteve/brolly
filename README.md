@@ -12,10 +12,6 @@ Really just an excuse to learn some new React APIs and mess around.
 
 ### Deployment
 
-- Run `yarn deploy` or...
-
-- Build production: `yarn build`
-- Add & commit: `git add dist -f && git commit -m "Release app"`
-- Push to gh-pages: `git subtree push --prefix dist origin gh-pages`
+- Run `yarn deploy` to push to GH pages
 
 _Note: may have to delete the `gh-pages` branch on github first_
