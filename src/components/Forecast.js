@@ -79,7 +79,7 @@ export default class Forecast extends PureComponent {
 
           <p className="precipitation__description">
             <span className="typo-light">
-              chance between <br />
+              chance of rain between <br />
               <strong>
                 {format(currentTimeForecast.time, "h")} -{" "}
                 {format(addHours(currentTimeForecast.time, 3), "ha")}

@@ -35,6 +35,9 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production",
+    "add-dist": "git add dist && git commit -m \"Release\"",
+    "push-dist": "git subtree push --prefix dist origin gh-pages",
+    "deploy": "yarn build && yarn add-dist && yarn push-dist",
     "test": "jest",
     "test-tdd": "jest --watch",
     "test-clear": "jest --clearCache"
