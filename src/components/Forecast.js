@@ -31,6 +31,8 @@ export default class Forecast extends PureComponent {
   };
 
   getDayOfForecast(date) {
+    date = new Date(date);
+
     if (isToday(date)) {
       return "Today";
     }

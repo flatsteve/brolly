@@ -111,7 +111,7 @@ export const getDailyForecasts = (forecast, date) => {
   }
 
   const daysForecast = forecast.find(dailyForecast => {
-    return isSameDay(dailyForecast.date, date);
+    return isSameDay(new Date(dailyForecast.date), new Date(date));
   });
 
   return daysForecast;

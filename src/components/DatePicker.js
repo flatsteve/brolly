@@ -30,7 +30,7 @@ class DatePicker extends Component {
       return isSameDay(date, new Date());
     }
 
-    return isSameDay(date, lastForecastDateAvailable);
+    return isSameDay(new Date(date), new Date(lastForecastDateAvailable));
   };
 
   render() {
@@ -47,7 +47,7 @@ class DatePicker extends Component {
           dangerouslySetInnerHTML={{ __html: arrowIcon }}
         />
 
-        <p className="date-picker__date">{format(date, "ddd, Do MMM")}</p>
+        <p className="date-picker__date">{format(date, "EEE, do MMM")}</p>
 
         <div
           data-testid="date-next-button"
