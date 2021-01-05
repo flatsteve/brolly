@@ -44,7 +44,7 @@
     "test-clear": "jest --clearCache"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "date-fns": "^2.9.0",
     "lodash": "^4.17.15",
     "normalize.css": "^8.0.1",
